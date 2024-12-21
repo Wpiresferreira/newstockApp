@@ -46,11 +46,14 @@ app.use(cookieParser());  // Parse cookies attached to client requests
 
 
 // Routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
+});
 app.use('/', routes);
 
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, '.', 'components', 'home.htm'));
-});
+// app.get('/', function (req, res) {
+//     res.sendFile(path.join(__dirname, '.', 'components', 'home.htm'));
+// });
         
 app.listen(5000, async () => {
     try{
