@@ -9,8 +9,8 @@ const router = express.Router();
 
 
 //Database Routes
-router.post("/login", dbController.login);
-router.get("/watchlist", authenticateToken, dbController.getWatchlist);
+router.post("/api/login", dbController.login);
+router.get("/api/watchlist", authenticateToken, dbController.getWatchlist);
 router.put(
   "/add_to_watchlist",
   authenticateToken,

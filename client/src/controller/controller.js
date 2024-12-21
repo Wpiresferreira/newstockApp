@@ -1,13 +1,14 @@
 //  const url = "https://server-stocks.vercel.app/"
 //const url = "http://142.59.11.227:5000"
-const url = "http://localhost:5000"
+// const url = "http://localhost:5000"
+const url = ""
 
 export async function doLogin(email, password) {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Accept", "*/*");
   
-    const req = new Request(url + "/login", {
+    const req = new Request(url + "/api/login", {
       method: "POST",
       body: JSON.stringify({ email: email, password: password }),
       headers: myHeaders,
@@ -173,7 +174,7 @@ export async function getWatchlist() {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Accept", "*/*");
   
-    const req = new Request(url + "/symbols", {
+    const req = new Request(url + "/api/symbols", {
       method: "GET",
       headers: myHeaders,
       credentials: "include",
