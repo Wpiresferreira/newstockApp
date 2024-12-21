@@ -22,7 +22,7 @@ app.use(cors({ origin: origin, credentials: true,})) // Allow credentials
 
 // app.use(express.static('public'));
 // Serve the static files from the React app
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
+app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.use(bodyParser.json())
 app.use(cookieParser());  // Parse cookies attached to client requests
