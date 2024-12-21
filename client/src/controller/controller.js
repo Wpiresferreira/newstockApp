@@ -31,7 +31,7 @@ export async function getWatchlist() {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Accept", "*/*");
   
-    const req = new Request(url + "/watchlist", {
+    const req = new Request(url + "/api/watchlist", {
       method: "GET",
       headers: myHeaders,
       credentials: "include",
@@ -60,7 +60,7 @@ export async function getWatchlist() {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Accept", "*/*");
   
-    const req = new Request(url + "/add_to_watchlist", {
+    const req = new Request(url + "/api/add_to_watchlist", {
       method: "PUT",
       body: JSON.stringify({ticker: symbol}),
       headers: myHeaders,
@@ -91,7 +91,7 @@ export async function getWatchlist() {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Accept", "*/*");
   
-    const req = new Request(url + "/remove_from_watchlist", {
+    const req = new Request(url + "/api/remove_from_watchlist", {
       method: "DELETE",
       body: JSON.stringify({ticker: symbol}),
       headers: myHeaders,
@@ -119,7 +119,7 @@ export async function getWatchlist() {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Accept", "*/*");
   
-    const req = new Request(url + "/profile/"+ ticker, {
+    const req = new Request(url + "/api/profile/"+ ticker, {
       method: "GET",
       headers: myHeaders,
       credentials: "include",
@@ -147,7 +147,7 @@ export async function getWatchlist() {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Accept", "*/*");
   
-    const req = new Request(url + "/quote/"+ ticker, {
+    const req = new Request(url + "/api/quote/"+ ticker, {
       method: "GET",
       headers: myHeaders,
       credentials: "include",

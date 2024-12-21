@@ -12,12 +12,12 @@ const router = express.Router();
 router.post("/api/login", dbController.login);
 router.get("/api/watchlist", authenticateToken, dbController.getWatchlist);
 router.put(
-  "/add_to_watchlist",
+  "/api/add_to_watchlist",
   authenticateToken,
   dbController.addToWatchlist
 );
 router.delete(
-    "/remove_from_watchlist",
+    "/api/remove_from_watchlist",
     authenticateToken,
     dbController.removeFromWatchlist
   );
@@ -26,10 +26,10 @@ router.delete(
 // // router.post('/logout', userControler.logout);
 
 //API Routes
-router.get("/profile/:symbol", authenticateToken, apiController.getStockProfile);
-router.get("/quote/:symbol", authenticateToken, apiController.getStockQuote);
+router.get("/api/profile/:symbol", authenticateToken, apiController.getStockProfile);
+router.get("/api/quote/:symbol", authenticateToken, apiController.getStockQuote);
 // router.get("/symbols", authenticateToken, apiController.getStockSymbols);
-router.get("/symbols", apiController.getStockSymbols);
+router.get("/api/symbols", apiController.getStockSymbols);
 
 
 
