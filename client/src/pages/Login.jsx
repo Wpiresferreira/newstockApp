@@ -41,7 +41,7 @@ export default function Login() {
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-3 rounded-lg border border-solid border-gray-300 mb-4 focus:shadow-lg"
+            className="w-full bg-sky-50 p-3 rounded-lg border border-solid border-gray-300 mb-4 focus:shadow-lg"
             type="text"
           ></input>
         </div>
@@ -50,7 +50,7 @@ export default function Login() {
           <input
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className=" w-full p-3 rounded-lg border border-solid border-gray-300 mb-4 focus:shadow-lg"
+            className="w-full bg-sky-50 p-3 rounded-lg border border-solid border-gray-300 mb-4 focus:shadow-lg"
             type="password"
           ></input>
         </div>
