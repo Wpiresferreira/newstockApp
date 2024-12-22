@@ -6,6 +6,12 @@
   overflow: hidden;
   color: black
 }
+input{
+  background-color: rgb(186 230 253);
+}
+input:focus{
+  background-color: rgb(240 249 255);
+}
 
 .logo {
   height: 6em;
