@@ -31,6 +31,10 @@ export default function BoxLeft({ ticker }) {
             height={60}
             priority={"true"}
             alt="Company logo"
+            onerror={()=>{
+              this.onerror=null;
+              this.src='https://placehold.co/400x300'}
+            }
           />
         </div>
         <div className="flex flex-col justify-evenly">

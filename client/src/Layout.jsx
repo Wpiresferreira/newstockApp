@@ -5,7 +5,7 @@ import Top from "./components/Top";
 
 const Layout = () => {
   return (
-    <main className="grid grid-rows-[60px_auto] min-h-[100vh]">
+    <main className="flex flex-col min-h-[100vh] max-w-430px] bg-sky-50">
       <Top />
       <Outlet />
       {/* <Footer/> */}

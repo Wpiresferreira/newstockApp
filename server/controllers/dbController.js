@@ -5,6 +5,9 @@ import generateToken from "../utils/generateToken.js"; // Function to generate J
 export async function login(req, res) {
   const { email, password } = req.body;
 
+  //delete before publish
+//  const  email = 'wagner_pires@icloud.com'
+//  const password = '123'
   // Validate if there is username
   if (!email) {
     return res.status(401).json({ message: "Please, insert your username!" });
@@ -23,9 +26,9 @@ export async function login(req, res) {
       return res.status(404).json({ message: "Invalid User." });
     }
     const passwordMatch = await bcrypt.compare(password, user.rows[0].password);
-    // if (!passwordMatch) {
-    //   return res.status(401).json({message:'Invalid credentials'});
-    // } else {
+    if (!passwordMatch) {
+      return res.status(401).json({message:'Invalid credentials'});
+    } else {
 
     // Generate JWT token for the authenticated user
     const token = generateToken(user.rows[0]);
@@ -39,15 +42,53 @@ export async function login(req, res) {
       })
       .status(200)
       .json({ message: "Logged in successfully" });
-    // }
+    }
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Error. Try again later" });
   }
 }
 
+export async function signup(req, res) {
+  const { email, name,  password } = req.body;
+
+  //delete before publish
+  if (!email) {
+    return res.status(401).json({ message: "Please, insert your username!" });
+  }
+
+  // Validate if there is password, and lengh greater or equal 3
+  if (!password || password.length < 3) {
+    return res.status(401).json({ message: "Please, insert your password!" });
+  }
+
+  const passwordHashed = await bcrypt.hash(password,10)
+
+  try {
+    const user = await sql`
+      INSERT INTO stock_users (email, name, password)
+      VALUES (${email}, ${name}, ${passwordHashed})
+      `;
+    if (user.rowCount == 0) {
+      return res.status(404).json({ message: "Invalid User." });
+    }
+    
+    return res
+      .status(200)
+      .json({ message: "Signup successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Error. Try again later" });
+  }
+}
+
+export async function checkIsLogged(req, res) {
+  console.log('req.user' + req.user)
+    return res.status(200)
+      .json({ message: "User is logged" });
+}
+
 export async function getWatchlist(req, res) {
-  console.log(req.user)
   try {
     const findUser = await sql`
       SELECT *
@@ -106,6 +147,10 @@ export async function removeFromWatchlist(req, res) {
       res.status(500).json({ message: "Invalid Session" });
     }
   }
+
+  export async function logout (req, res) {
+    return res.clearCookie('token').status(200).json({ message: 'Logged out successfully' });
+  };
 
 // export async function signup (req, res) {
 //   try {

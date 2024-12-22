@@ -5,6 +5,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Layout from "./Layout";
 import WatchlistPage from "./pages/WatchlistPage";
+import Logout from "./pages/Logout";
+import Signup from "./pages/Signup";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
           <Route path="watchlist" element={<WatchlistPage />} />
+          <Route path="signup" element={<Signup />} />
+          <Route path="logout" element={<Logout />} />
           {/*<Route path="/courses/:programCode" element={<Courses />} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
@@ -22,7 +26,6 @@ function App() {
           <Route path="contact" element={<Contact />} />
           <Route path="profile" element={<Profile />} />
           <Route path="test" element={<Test />} />
-          <Route path="logout" element={<Logout />} />
           <Route path="students-details" element={<StudentsDetails />} />
           <Route path="/students-details/:studentId" element={<StudentsDetails />} />
           <Route path="*" element={<NotFound />} /> */}

@@ -1,7 +1,7 @@
 //  const url = "https://server-stocks.vercel.app/"
 //const url = "http://142.59.11.227:5000"
-// const url = "http://localhost:5000"
 const url = ""
+//const url = "http://localhost:5000"
 
 export async function doLogin(email, password) {
     const myHeaders = new Headers();
@@ -25,6 +25,50 @@ export async function doLogin(email, password) {
       return { status: 500, response: { message: "Check connection" } };
     }
   }
+
+  export async function doSignup(email, name, password, confirmPassword) {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Accept", "*/*");
+  
+    const req = new Request(url + "/api/signup", {
+      method: "POST",
+      body: JSON.stringify({ email: email, name: name, password: password, confirm_password : confirmPassword }),
+      headers: myHeaders,
+      credentials: "include", // Include cookies in the request
+    });
+    try {
+      return await fetch(req).then(async (res) => {
+        const response = { status: res.status, response: await res.json() }
+        console.log(response)
+        return response;
+      });
+    } catch (e) {
+      console.error(e);
+      return { status: 500, response: { message: "Check connection" } };
+    }
+  }
+
+
+// export async function checkIsLogged() {
+//     const myHeaders = new Headers();
+//     myHeaders.append("Content-Type", "application/json");
+//     myHeaders.append("Accept", "*/*");
+  
+//     const req = new Request(url + "/api/islogged", {
+//       method: "GET",
+//       headers: myHeaders,
+//       credentials: "include", // Include cookies in the request
+//     });
+//     try {
+//       return await fetch(req).then(async (res) => {
+//         const response = { status: res.status, response: await res.json() }
+//         return response;
+//       });
+//     } catch (e) {
+//       return { status: 500, response: { message: "Check connection" } };
+//     }
+//   }
 
 export async function getWatchlist() {
     const myHeaders = new Headers();
@@ -194,4 +238,33 @@ export async function getWatchlist() {
       console.log(e);
       return { status: 500, response: { message: "Check connection" } };
     }
+  }
+
+  export async function doLogout() {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Accept", "*/*");
+   
+    const req = new Request(url + "/api/logout", {
+      method: "GET",
+      headers: myHeaders,
+      credentials: "include",
+    });
+  
+    // Send logout request
+    try {
+      const response = await fetch(url + "/logout", {
+        method: "POST",
+        credentials: "include", // Include cookies in the request
+      });
+  
+      return await response.json();
+    } catch (error) {
+      console.error(error);
+    }
+  
+    const result = await fetch(req).then(async (res) => {
+      return { status: res.status, response: await res.json() };
+    });
+    return await result;
   }

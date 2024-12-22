@@ -6,10 +6,12 @@ import * as apiController from "../controllers/apiController.js";
 
 const router = express.Router();
 
+// router.get("/api/islogged", authenticateToken, dbController.getW);
 
 
 //Database Routes
 router.post("/api/login", dbController.login);
+router.post("/api/signup", dbController.signup);
 router.get("/api/watchlist", authenticateToken, dbController.getWatchlist);
 router.put(
   "/api/add_to_watchlist",
@@ -30,6 +32,7 @@ router.get("/api/profile/:symbol", authenticateToken, apiController.getStockProf
 router.get("/api/quote/:symbol", authenticateToken, apiController.getStockQuote);
 // router.get("/symbols", authenticateToken, apiController.getStockSymbols);
 router.get("/api/symbols", apiController.getStockSymbols);
+router.get('/api/logout', dbController.logout);
 
 
 
@@ -38,7 +41,6 @@ router.get("/api/symbols", apiController.getStockSymbols);
 // // router.post('/getuserprofile',authenticateToken, userControler.getUserProfile)
 // // router.post('/signup', userControler.signup);
 // // router.put('/updateuser', authenticateToken, userControler.updateUser);
-// // router.post('/logout', userControler.logout);
 
 // // //Program Routes
 // // router.get('/getprograms', programController.getPrograms);
