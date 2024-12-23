@@ -29,7 +29,7 @@ router.delete(
 
 //API Routes
 router.get("/api/profile/:symbol", authenticateToken, apiController.getStockProfile);
-router.get("/api/quote/:symbol", authenticateToken, apiController.getStockQuote);
+router.get("/api/quote/:symbol", apiController.getStockQuote);
 // router.get("/symbols", authenticateToken, apiController.getStockSymbols);
 router.get("/api/symbols", apiController.getStockSymbols);
 router.get('/api/logout', dbController.logout);
