@@ -27,10 +27,10 @@ export default function MiniBox({ ticker }) {
 
   return (
     <div className="bg-black">
-      <span className={`ml-6 my-2 text-${color}`}>{ticker}</span>  
-      <span className={`ml-2 my-2 text-${color}`}>${Number(quote.c).toFixed(2)}</span>  
-      <span className={`ml-2 my-2 text-${color}`}>{Number(quote.dp).toFixed(2)}%</span>  
-      <span className={`ml-2 text-xl text-${color} ${arrow}`}></span>  
+      <span className={`ml-6  text-xl my-2 text-${color}`}>{ticker}</span>  
+      <span className={`ml-2 text-xl my-2 text-${color}`}>${Number(quote.c).toFixed(2)}</span>  
+      <span className={`ml-2 text-xl my-2 text-${color}`}>{Number(quote.dp).toFixed(2)}%</span>  
+      <span className={`ml-2 text-2xl text-${color} ${arrow}`}></span>  
     </div>
   );
 }

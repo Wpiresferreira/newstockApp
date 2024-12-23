@@ -51,21 +51,21 @@ export default function Top() {
   return (
     <div>
       <div className="grid grid-cols-[20%_auto_20%] bg-sky-900 place-items-center w-[100vw] max-w-[430px] min-h-[70px] mt-4">
-        <div className="bg-sky-900 h-12 rounded-full w-12 flex justify-center items-center">
+        <div className="bg-sky-50 h-12 rounded-full w-12 flex justify-center items-center">
           <span
             onClick={() => {
               navigate("/");
             }}
-            className="fa fa-home text-white"
+            className="fa fa-home text-2xl text-sky-900"
           ></span>
         </div>
         <div className="h-12 flex justify-center items-center">
           <h1 className="text-xl font-bold text-sky-50">Stock Simulator</h1>
         </div>
-        <div className="bg-sky-900 h-12 rounded-full w-12 flex justify-center items-center">
+        <div className="bg-sky-50 h-12 rounded-full w-12 flex justify-center items-center">
           <span
             onClick={handleClickSideBar}
-            className={`text-white fa ${
+            className={`text-sky-900 text-2xl fa ${
               showSideBar ? "fa-times" : "fa-reorder"
             } `}
           ></span>

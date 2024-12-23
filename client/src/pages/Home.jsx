@@ -34,15 +34,27 @@ export default function Home() {
 
   return (
     <div className="flex flex-col">
+      <Marquee className="bg-black text-white">
+        <MiniBox ticker={"AAPL"}/>
+        <MiniBox ticker={"MSFT"}/>
+        <MiniBox ticker={"GOOGL"}/>
+        <MiniBox ticker={"TSLA"}/>
+      </Marquee>
       <div className={`bg-[url('/background.png')] bg-cover bg-center m-3 rounded border-2 border-solid border-sky-500 p-5`}>
         {/* <img
           src={Background}
           className="z-0 m-[-20px] h-[250px] w-[4000]"
         ></img> */}
         <div className="text-white font-bold text-right italic">
-          Try buy and sell over <br></br>27,400 US Stocks, ADRs, ETFs <br></br>and much more.
           <br></br>
-          You can gain confidence without loss risks.
+          <br></br>
+          <br></br>
+          <br></br>
+          Try buy and sell over <br></br>27,400 US Stocks, ADRs, <br></br>ETFs and much more.
+          <br></br>
+          <br></br>
+          <br></br>
+          Gain confidence without risks of losses.
         </div>
       </div>
       <button
@@ -67,12 +79,6 @@ export default function Home() {
       <div className="fa fa-pie-chart" />
       <div className="fa fa-usd" /> */}
 
-      <Marquee className="bg-black text-white">
-        <MiniBox ticker={"AAPL"}/>
-        <MiniBox ticker={"MSFT"}/>
-        <MiniBox ticker={"GOOGL"}/>
-        <MiniBox ticker={"TSLA"}/>
-      </Marquee>
       {/* {loggedUser ? <Dashboard loggedUser={loggedUser}/> : <Welcome />} */}
     </div>
   );
