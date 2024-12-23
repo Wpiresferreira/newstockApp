@@ -23,7 +23,7 @@ export default function BoxLeft({ ticker }) {
   return (
     <>
      {companyProfile &&
-     <div className="flex rounded-l-md  bg-slate-100 ml-2 mt-2 w-[67vw]">
+     <div className="flex rounded-l-md  bg-sky-100 ml-2 mt-2 w-[67vw]">
         <div className="m-3 rounded-full border-2 border-white overflow-hidden max-h-[40px] max-w-[40px] min-h-[40px] min-w-[40px]">
           <img
             src={companyProfile.logo}
@@ -38,8 +38,8 @@ export default function BoxLeft({ ticker }) {
           />
         </div>
         <div className="flex flex-col justify-evenly">
-          <div className="font-bold text-black text-[16px]">{ticker} </div>
-          <div className="text-black text-nowrap text-[12px]">
+          <div className="font-bold  text-left text-black text-[16px]">{ticker} </div>
+          <div className="text-black text-left text-nowrap text-[12px]">
             {companyProfile.name}
           </div>
         </div>
