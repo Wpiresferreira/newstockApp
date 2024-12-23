@@ -59,7 +59,8 @@ export default function Top() {
             className="fa fa-home text-2xl text-sky-900"
           ></span>
         </div>
-        <div className="h-12 flex justify-center items-center">
+        <div className="h-12 overflow-hidden flex justify-center items-center">
+          {/* <img src="/favico.ico" width={"45px"} className="mx-2"></img> */}
           <h1 className="text-xl font-bold text-sky-50">Stock Simulator</h1>
         </div>
         <div className="bg-sky-50 h-12 rounded-full w-12 flex justify-center items-center">

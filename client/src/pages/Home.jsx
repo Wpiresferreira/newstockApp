@@ -69,6 +69,9 @@ export default function Home() {
       >
         Signup
       </button>
+      <br></br>
+      <br></br>
+      <h3 className="text-right mr-4">©Copyright 2024 Wagner Pires Ferreira</h3>
       {/* <div className="fa fa-bar-chart" onClick={() => navigate("/watchlist")} />
       <div className="fa fa-user-o" />
       <div>
