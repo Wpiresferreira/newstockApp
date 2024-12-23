@@ -26,7 +26,7 @@ export default function Top() {
   const itemsMenu = [
     { label: "Login", icon: "fa-user-circle-o", href: "/login", logged: false },
     { label: "Signup", icon: "fa-user-plus", href: "/signup", logged: false },
-    { label: "My Assets", icon: "fa-diamond", href: "/assets", logged: true },
+    { label: "My Assets", icon: "fa-pie-chart", href: "/assets", logged: true },
     { label: "Watchlist", icon: "fa-star", href: "/watchlist", logged: true },
     {
       label: "Transactions",
@@ -36,7 +36,7 @@ export default function Top() {
     },
     {
       label: "My Profile",
-      icon: "fa-exchange",
+      icon: "fa-user-o",
       href: "/profile",
       logged: true,
     },
@@ -50,17 +50,17 @@ export default function Top() {
 
   return (
     <div>
-      <div className="grid grid-cols-[20vw_60vw_20vw] bg-sky-50 place-items-center w-[100vw] max-w-[430px] min-h-[70px] mt-4">
+      <div className="grid grid-cols-[20%_auto_20%] bg-sky-900 place-items-center w-[100vw] max-w-[430px] min-h-[70px] mt-4">
         <div className="bg-sky-900 h-12 rounded-full w-12 flex justify-center items-center">
           <span
             onClick={() => {
               navigate("/");
             }}
-            className="fa fa-bar-chart text-white"
+            className="fa fa-home text-white"
           ></span>
         </div>
         <div className="h-12 flex justify-center items-center">
-          <h1 className="text-xl font-bold">Stock Simulator</h1>
+          <h1 className="text-xl font-bold text-sky-50">Stock Simulator</h1>
         </div>
         <div className="bg-sky-900 h-12 rounded-full w-12 flex justify-center items-center">
           <span
@@ -72,7 +72,7 @@ export default function Top() {
         </div>
       </div>
       {showSideBar && (
-        <div className="z-10 absolute border-sky-500 border-t-2 mt-2 bg-sky-100">
+        <div className="z-10 absolute border-sky-500 border-t-2 bg-sky-100">
           {itemsMenu.map(
             (item, index) =>
               ((
@@ -84,7 +84,7 @@ export default function Top() {
                     setShowSideBar(!showSideBar);
                     navigate(item.href);
                   }}
-                  className="flex justify-start items-center w-[50vw] border-solid border-sky-500 border-b-2 bg-sky-100"
+                  className="flex justify-start pr-12 hover:font-bold hover:bg-sky-200 items-center border-solid border-sky-500 border-b-2 bg-sky-100"
                 >
                   <div className="bg-sky-900 h-8 rounded-full w-8 flex justify-center items-center m-2">
                     <span

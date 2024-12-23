@@ -1,3 +1,4 @@
+
 #root {
   max-width: 430px;
   margin: 0 auto;
@@ -33,6 +34,34 @@ input:focus{
   to {
     transform: rotate(360deg);
   }
+}
+@keyframes marquee-content {
+	/* Element one fully ON screen at left-edge of container. */
+	from {
+		transform: translateX( 0% );
+	}
+	/* Element one fully OFF screen (just beyond left-ledge of container). */
+	to {
+		transform: translateX( -100% );
+	}
+}
+
+.marquee {
+  display: flex ;
+  overflow: hidden ;
+  white-space: nowrap ;
+  background-color: black;
+  width: 100vw ;
+}
+.marquee__item {
+  animation-duration: 10s ;
+  animation-iteration-count: infinite ;
+  animation-name: marquee-content ;
+  animation-timing-function: linear ;
+  padding: 5px 15px 5px 15px ;
+}
+.marquee:hover .marquee__item {
+  animation-play-state: paused ;
 }
 
 @media (prefers-reduced-motion: no-preference) {

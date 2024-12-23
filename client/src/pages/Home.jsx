@@ -2,11 +2,17 @@
 // import { getLoggedUser } from "../data/api";
 // import Welcome from "../components/Welcome"
 // import Dashboard from "../components/Dashboard";
+import Background from "../assets/background.png";
 
 import { useNavigate } from "react-router-dom";
+import Marquee from "react-fast-marquee"
+import MiniBox from "../components/MiniBox";
+// import Marquee from "../components/Marquee";
 
 export default function Home() {
   const navigate = useNavigate();
+
+  
   // const [loggedUser, setLoggedUser] = useState(null);
   // const [isLoading, setIsLoading] = useState(true);
 
@@ -28,7 +34,30 @@ export default function Home() {
 
   return (
     <div className="flex flex-col">
-      <div className="fa fa-bar-chart" onClick={() => navigate("/watchlist")} />
+      <div className={`bg-[url('/background.png')] bg-cover bg-center m-3 rounded border-2 border-solid border-sky-500 p-5`}>
+        {/* <img
+          src={Background}
+          className="z-0 m-[-20px] h-[250px] w-[4000]"
+        ></img> */}
+        <div className="text-white font-bold text-right italic">
+          Try buy and sell over <br></br>27,400 US Stocks, ADRs, ETFs <br></br>and much more.
+          <br></br>
+          You can gain confidence without loss risks.
+        </div>
+      </div>
+      <button
+        className="m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={() => navigate("/login")}
+      >
+        Login
+      </button>
+      <button
+        className="m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={() => navigate("/signup")}
+      >
+        Signup
+      </button>
+      {/* <div className="fa fa-bar-chart" onClick={() => navigate("/watchlist")} />
       <div className="fa fa-user-o" />
       <div>
         <span className="fa fa-long-arrow-up" />
@@ -36,7 +65,14 @@ export default function Home() {
       </div>
       <div className="fa fa-industry" />
       <div className="fa fa-pie-chart" />
-      <div className="fa fa-usd" />
+      <div className="fa fa-usd" /> */}
+
+      <Marquee className="bg-black text-white">
+        <MiniBox ticker={"AAPL"}/>
+        <MiniBox ticker={"MSFT"}/>
+        <MiniBox ticker={"GOOGL"}/>
+        <MiniBox ticker={"TSLA"}/>
+      </Marquee>
       {/* {loggedUser ? <Dashboard loggedUser={loggedUser}/> : <Welcome />} */}
     </div>
   );
