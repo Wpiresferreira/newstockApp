@@ -13,6 +13,7 @@ const router = express.Router();
 router.post("/api/login", dbController.login);
 router.post("/api/signup", dbController.signup);
 router.get("/api/watchlist", authenticateToken, dbController.getWatchlist);
+router.get("/api/assets", authenticateToken, dbController.getAssets);
 router.put(
   "/api/add_to_watchlist",
   authenticateToken,
@@ -28,8 +29,8 @@ router.delete(
 // // router.post('/logout', userControler.logout);
 
 //API Routes
-router.get("/api/profile/:symbol", authenticateToken, apiController.getStockProfile);
-router.get("/api/quote/:symbol", apiController.getStockQuote);
+// router.get("/api/profile/:symbol", authenticateToken, apiController.getStockProfile);
+router.get("/api/quote/:symbol", dbController.getStockQuote);
 // router.get("/symbols", authenticateToken, apiController.getStockSymbols);
 router.get("/api/symbols", apiController.getStockSymbols);
 router.get('/api/logout', dbController.logout);

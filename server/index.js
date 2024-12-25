@@ -7,13 +7,14 @@ import path  from 'path'; // To help the routes
 import {fileURLToPath} from 'url'; // To help the routes
 // import cors from 'cors' // To allow test the app in the same machine
 import routes from './routes/routes.js';
+import * as apiController from './controllers/apiController.js';
 
 dotenv.config()
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname =   path.dirname(__filename);
 
-//  const origin = 'https://react-registration-app.vercel.app'
+// const origin = 'https://react-registration-app.vercel.app'
 // const origin = 'http://localhost:3000'
 // const origin = 'http://localhost:3001'
 
@@ -64,3 +65,9 @@ app.listen(5000, async () => {
         console.log(error)
     }
 })
+
+apiController.updateProfile()
+  
+setInterval(async () => {
+  await apiController.updateData();
+}, 60000);

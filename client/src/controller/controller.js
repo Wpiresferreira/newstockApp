@@ -82,6 +82,7 @@ export async function getWatchlist() {
     });
   
     try {
+      console.log(req)
       return await fetch(req).then(async (res) => {
         if (res.status === 204) {
           return {
@@ -185,6 +186,32 @@ export async function getWatchlist() {
     }
   }
 
+  export async function getAssets() {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Accept", "*/*");
+  
+    const req = new Request(url + "/api/assets", {
+      method: "GET",
+      headers: myHeaders,
+      credentials: "include",
+    });
+  
+    try {
+      return await fetch(req).then(async (res) => {
+        if (res.status === 204) {
+          return {
+            status: res.status,
+            response: { message: "No Authenticated" },
+          };
+        }
+        return { status: res.status, response: await res.json() };
+      });
+    } catch (e) {
+      console.log(e);
+      return { status: 500, response: { message: "Check connection" } };
+    }
+  }
 
   export async function getQuote(ticker) {
     const myHeaders = new Headers();

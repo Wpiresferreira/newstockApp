@@ -7,6 +7,10 @@ import Layout from "./Layout";
 import WatchlistPage from "./pages/WatchlistPage";
 import Logout from "./pages/Logout";
 import Signup from "./pages/Signup";
+import Assets from "./pages/Assets";
+import Profile from "./pages/Profile";
+import NotFound from "./pages/NotFound";
+import Transactions from "./pages/Transactions";
 
 function App() {
   return (
@@ -18,6 +22,11 @@ function App() {
           <Route path="watchlist" element={<WatchlistPage />} />
           <Route path="signup" element={<Signup />} />
           <Route path="logout" element={<Logout />} />
+          <Route path="assets" element={<Assets />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="transactions" element={<Transactions />} />
+          <Route path="logout" element={<Logout />} />
+          <Route path="*" element={<NotFound />} />
           {/*<Route path="/courses/:programCode" element={<Courses />} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
@@ -28,7 +37,7 @@ function App() {
           <Route path="test" element={<Test />} />
           <Route path="students-details" element={<StudentsDetails />} />
           <Route path="/students-details/:studentId" element={<StudentsDetails />} />
-          <Route path="*" element={<NotFound />} /> */}
+          */}
         </Route>
       </Routes>
     </BrowserRouter>

@@ -11,7 +11,7 @@ import BoxLeft from "../components/BoxLeft";
 import BoxRigth from "../components/BoxRigth";
 // import Dashboard from "../components/Dashboard";
 
-export default function WatchlistPage() {
+export default function Profile() {
   const [watchlist, setWatchlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [allCompanies, setAllCompanies] = useState([]);
@@ -23,7 +23,6 @@ export default function WatchlistPage() {
     // Retrieve user information using the cookie
     async function getData() {
       const res = await getWatchlist();
-      console.log(res)
       if (res.status > 201) {
         setIsLoading(false);
         return;
@@ -34,12 +33,8 @@ export default function WatchlistPage() {
     getData();
   }, []);
 
-useEffect(()=>{
-
-console.log(watchlist)
-},[watchlist])
-
   useEffect(() => {
+    // Retrieve user information using the cookie
     async function getData() {
       const res = await getAllCompanies();
       if (res.status > 201) {

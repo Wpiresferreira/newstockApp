@@ -5,18 +5,21 @@ export default function MiniBox({ ticker }) {
   const [quote, setQuote] = useState({});
   const [color, setColor] = useState("white");
   const [arrow, setArrow] = useState("fa fa-minus");
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     async function getData() {
       const res = await getQuote(ticker);
       setQuote(res.response);
+      if(res.status>=300) return
+      setIsLoading(false)
     }
     getData();
   }, []);
 
   useEffect(() => {
-    console.log(quote);
-    if (quote.d > 0) {
+    if(isLoading)return
+    if (quote.quote.d > 0) {
       setColor("green-500");
       setArrow("fa  fa-caret-up");
     } else {
@@ -24,12 +27,19 @@ export default function MiniBox({ ticker }) {
       setArrow("fa  fa-caret-down");
     }
   }, [quote]);
+  
+  if (isLoading) return (
+    <div className="bg-black">
+    <span className={`ml-6  text-2xl my-2 text-${color}`}>Loading . . .</span>  
+  </div>
+  )
 
   return (
     <div className="bg-black">
+      {/* {console.log('Rendered at ' + new Date(Date.now()))} */}
       <span className={`ml-6  text-xl my-2 text-${color}`}>{ticker}</span>  
-      <span className={`ml-2 text-xl my-2 text-${color}`}>${Number(quote.c).toFixed(2)}</span>  
-      <span className={`ml-2 text-xl my-2 text-${color}`}>{Number(quote.dp).toFixed(2)}%</span>  
+      <span className={`ml-2 text-xl my-2 text-${color}`}>${Number(quote.quote.c).toFixed(2)}</span>  
+      <span className={`ml-2 text-xl my-2 text-${color}`}>{Number(quote.quote.dp).toFixed(2)}%</span>  
       <span className={`ml-2 text-2xl text-${color} ${arrow}`}></span>  
     </div>
   );

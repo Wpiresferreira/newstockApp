@@ -51,26 +51,26 @@ export default function Top() {
   return (
     <div>
       <div className="grid grid-cols-[20%_auto_20%] bg-sky-900 place-items-center w-[100vw] max-w-[430px] min-h-[70px] mt-4">
-        <div className="bg-sky-50 h-12 rounded-full w-12 flex justify-center items-center">
+        <button className="bg-sky-50 h-12 rounded-full w-12 flex justify-center items-center">
           <span
             onClick={() => {
               navigate("/");
             }}
             className="fa fa-home text-2xl text-sky-900"
           ></span>
-        </div>
+        </button>
         <div className="h-12 overflow-hidden flex justify-center items-center">
           {/* <img src="/favico.ico" width={"45px"} className="mx-2"></img> */}
           <h1 className="text-xl font-bold text-sky-50">Stock Simulator</h1>
         </div>
-        <div className="bg-sky-50 h-12 rounded-full w-12 flex justify-center items-center">
+        <button className="bg-sky-50 h-12 rounded-full w-12 flex justify-center items-center">
           <span
             onClick={handleClickSideBar}
             className={`text-sky-900 text-2xl fa ${
               showSideBar ? "fa-times" : "fa-reorder"
             } `}
           ></span>
-        </div>
+        </button>
       </div>
       {showSideBar && (
         <div className="z-10 absolute border-sky-500 border-t-2 bg-sky-100">

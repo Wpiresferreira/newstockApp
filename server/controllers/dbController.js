@@ -1,13 +1,14 @@
 import { sql } from "@vercel/postgres";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/generateToken.js"; // Function to generate JWT tokens
+import {companies} from './apiController.js'
 
 export async function login(req, res) {
   const { email, password } = req.body;
 
   //delete before publish
-//  const  email = 'wagner_pires@icloud.com'
-//  const password = '123'
+  //  const  email = 'wagner_pires@icloud.com'
+  //  const password = '123'
   // Validate if there is username
   if (!email) {
     return res.status(401).json({ message: "Please, insert your username!" });
@@ -27,21 +28,20 @@ export async function login(req, res) {
     }
     const passwordMatch = await bcrypt.compare(password, user.rows[0].password);
     if (!passwordMatch) {
-      return res.status(401).json({message:'Invalid credentials'});
+      return res.status(401).json({ message: "Invalid credentials" });
     } else {
-
-    // Generate JWT token for the authenticated user
-    const token = generateToken(user.rows[0]);
-    // Set the token in a cookie with httpOnly option for security
-    // console.log(process.env.NODE_ENV === 'production')
-    return res
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "None",
-      })
-      .status(200)
-      .json({ message: "Logged in successfully" });
+      // Generate JWT token for the authenticated user
+      const token = generateToken(user.rows[0]);
+      // Set the token in a cookie with httpOnly option for security
+      // console.log(process.env.NODE_ENV === 'production')
+      return res
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "None",
+        })
+        .status(200)
+        .json({ message: "Logged in successfully" });
     }
   } catch (error) {
     console.error(error);
@@ -50,7 +50,7 @@ export async function login(req, res) {
 }
 
 export async function signup(req, res) {
-  const { email, name,  password } = req.body;
+  const { email, name, password } = req.body;
 
   //delete before publish
   if (!email) {
@@ -62,7 +62,7 @@ export async function signup(req, res) {
     return res.status(401).json({ message: "Please, insert your password!" });
   }
 
-  const passwordHashed = await bcrypt.hash(password,10)
+  const passwordHashed = await bcrypt.hash(password, 10);
 
   try {
     const user = await sql`
@@ -72,10 +72,8 @@ export async function signup(req, res) {
     if (user.rowCount == 0) {
       return res.status(404).json({ message: "Invalid User." });
     }
-    
-    return res
-      .status(200)
-      .json({ message: "Signup successfully" });
+
+    return res.status(200).json({ message: "Signup successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Error. Try again later" });
@@ -83,9 +81,8 @@ export async function signup(req, res) {
 }
 
 export async function checkIsLogged(req, res) {
-  console.log('req.user' + req.user)
-    return res.status(200)
-      .json({ message: "User is logged" });
+  console.log("req.user" + req.user);
+  return res.status(200).json({ message: "User is logged" });
 }
 
 export async function getWatchlist(req, res) {
@@ -115,7 +112,7 @@ export async function addToWatchlist(req, res) {
         INSERT INTO stock_watchlist (email, ticker)
         VALUES (${req.user.email}, ${ticker})
         `;
-console.log(insertUser)
+    console.log(insertUser);
     if (insertUser.rowCount == 1) {
       res.status(200).json({ message: `${ticker} added sucessfully!` });
     } else {
@@ -127,30 +124,189 @@ console.log(insertUser)
   }
 }
 
-
 export async function removeFromWatchlist(req, res) {
-    const { ticker } = req.body;
-  
-    try {
-      const removedTicker = await sql`
+  const { ticker } = req.body;
+
+  try {
+    const removedTicker = await sql`
           DELETE FROM stock_watchlist
           WHERE ticker = ${ticker}
           `;
-  console.log(removedTicker)
-      if (removedTicker.rowCount >= 1) {
-        res.status(200).json({ message: `${ticker} removed sucessfully!` });
-      } else {
-        res.status(404).json({ message: "Invalid Session" });
-      }
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Invalid Session" });
+    console.log(removedTicker);
+    if (removedTicker.rowCount >= 1) {
+      res.status(200).json({ message: `${ticker} removed sucessfully!` });
+    } else {
+      res.status(404).json({ message: "Invalid Session" });
     }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Invalid Session" });
   }
+}
 
-  export async function logout (req, res) {
-    return res.clearCookie('token').status(200).json({ message: 'Logged out successfully' });
-  };
+export async function logout(req, res) {
+  return res
+    .clearCookie("token")
+    .status(200)
+    .json({ message: "Logged out successfully" });
+}
+
+export async function getAssets(req, res) {
+  try {
+    const findUser = await sql`
+        SELECT *
+        FROM stock_assets
+        WHERE email = ${req.user.email}
+        `;
+
+    if (findUser.rows[0]) {
+      res.status(200).json(findUser.rows);
+    } else {
+      res.status(404).json({ message: "Invalid Session" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Invalid Session" });
+  }
+}
+export async function getStockQuote(req, res) {
+  setTimeout(() => {
+    
+    const symbol = req.params.symbol.toUpperCase();
+    // const apiUrl = `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${apiKey}`;
+    // const data = await fetch(apiUrl);
+    // const posts = await data.json();
+    // return posts;
+    
+    res.status(200).json(companies.filter((c)=> c.ticker === symbol)[0])
+  },1000);
+    // try {
+      //   const resultSelect = await sql`
+      //       SELECT *
+      //       FROM stock_companies
+      //       WHERE symbol = ${symbol}
+  //       `;
+
+  //   if (resultSelect.rowCount>0) {
+  //     res.status(200).json(resultSelect.rows[0]);
+  //   } else {
+  //     res.status(404).json({ message: "Invalid Session" });
+  //   }
+  // } catch (error) {
+  //   console.error(error);
+  //   res.status(500).json({ message: "Invalid Session" });
+  
+  // }
+}
+
+
+export async function updateCompany(company) {
+  try {
+    // console.log(company)
+    const resultUpdate = await sql`
+          UPDATE stock_companies 
+          SET c = ${company.quote.c},
+          d = ${company.quote.d},
+          dp = ${company.quote.dp},
+          h = ${company.quote.h},
+          l = ${company.quote.c},
+          o = ${company.quote.o},
+          pc = ${company.quote.pc},
+          t = ${new Date(company.quote.t)}
+          WHERE symbol = ${company.ticker}
+      `;
+    console.log(resultUpdate.rowCount>0?"OK":"Error");
+    // // export async function updateCompany(company){
+    //   try {
+    //     const resultUpdate = await sql`
+    //       INSERT INTO stock_companies (
+    //       symbol,
+    //     c,
+    //     d,
+    //     dp,
+    //     h,
+    //     l,
+    //     o,
+    //     pc,
+    //     t,
+    //     country,
+    //     currency,
+    //     estimateCurrency,
+    //     exchange,
+    //     finnhubIndustry,
+    //     ipo,
+    //     logo,
+    //     marketCapitalization,
+    //     name,
+    //     phone,
+    //     shareOutstanding,
+    //     ticker,
+    //     weburl
+    //   )
+    //     VALUES
+    //   (
+    //     ${company.ticker},
+    //     ${company.quote.c},
+    //     ${company.quote.d},
+    //     ${company.quote.dp},
+    //     ${company.quote.h},
+    //     ${company.quote.l},
+    //     ${company.quote.o},
+    //     ${company.quote.pc},
+    //     ${new Date(company.quote.t)},
+    //     ${company.profile.country},
+    //     ${company.profile.currency },
+    //     ${company.profile.estimateCurrency},
+    //     ${company.profile.exchange},
+    //     ${company.profile.finnhubIndustry},
+    //     ${company.profile.ipo},
+    //     ${company.profile.logo},
+    //     ${company.profile.marketCapitalization},
+    //     ${company.profile.name},
+    //     ${company.profile.phone},
+    //     ${company.profile.shareOutstanding},
+    //     ${company.profile.ticker},
+    //     ${company.profile.weburl}
+    //   )
+
+    // {
+    //   ticker: 'ABEV',
+    //   quote: {
+    //     c: 1.9,
+    //     d: 0,
+    //     dp: 0,
+    //     h: 1.92,
+    //     l: 1.89,
+    //     o: 1.92,
+    //     pc: 1.9,
+    //     t: 1735074000
+    //   },
+    //   profile: {
+    //     country: 'BR',
+    //     currency: 'BRL',
+    //     estimateCurrency: 'BRL',
+    //     exchange: 'B3 S.A.',
+    //     finnhubIndustry: 'Beverages',
+    //     ipo: '2013-11-11',
+    //     logo: 'https://static2.finnhub.io/file/publicdatany/finnhubimage/stock_logo/ABEV3.SA.png',
+    //     marketCapitalization: 192506.043836,
+    //     name: 'Ambev SA',
+    //     phone: '551121221414',
+    //     shareOutstanding: 15757.66,
+    //     ticker: 'ABEV3.SA',
+    //     weburl: 'https://www.ambev.com.br/'
+    //   }
+
+    // if (resultUpdate.rowCount >0) {
+    //   res.status(200).json(resultUpdate);
+    // } else {
+    //   res.status(404).json({ message: "Invalid Session" });
+    // }
+  } catch (error) {
+    console.error(error);
+    // res.status(500).json({ message: "Invalid Session" });
+  }
+}
 
 // export async function signup (req, res) {
 //   try {
