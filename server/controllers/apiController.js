@@ -98,9 +98,11 @@ export async function getStockSymbols(req, res) {
 
 async function refreshStockQuote(symbol) {
   // const symbol = req.params.symbol.toUpperCase();
+  console.log(symbol)
   const apiUrl = `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${apiKey}`;
   const data = await fetch(apiUrl);
   const posts = await data.json();
+  console.log(posts)
   return posts;
 }
 // export async function getStockQuote(req, res){
