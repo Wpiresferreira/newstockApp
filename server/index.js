@@ -68,6 +68,6 @@ app.listen(5000, async () => {
 
 apiController.updateProfile()
   
-// setInterval(async () => {
+ setInterval(async () => {
   await apiController.updateData();
-// }, 60000);
+ }, 60000);
