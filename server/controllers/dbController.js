@@ -92,12 +92,13 @@ export async function getWatchlist(req, res) {
       FROM stock_watchlist
       WHERE email = ${req.user.email}
       `;
+      console.log(findUser)
 
-    if (findUser.rows[0]) {
       res.status(200).json(findUser.rows);
-    } else {
-      res.status(404).json({ message: "Invalid Session" });
-    }
+    // if (findUser.rows[0]) {
+    // } else {
+    //   res.status(404).json({ message: "Invalid Session" });
+    // }
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Invalid Session" });
@@ -158,7 +159,11 @@ export async function getAssets(req, res) {
         FROM stock_assets
         WHERE email = ${req.user.email}
         `;
-
+        
+        for(let i = 0; i<findUser.rows.length;i++){
+          const tmpFilter = (companies.filter((c)=>c.ticker === findUser.rows[i].ticker))[0]
+          findUser.rows[i].quote = tmpFilter
+        }
     if (findUser.rows[0]) {
       res.status(200).json(findUser.rows);
     } else {
@@ -169,18 +174,34 @@ export async function getAssets(req, res) {
     res.status(500).json({ message: "Invalid Session" });
   }
 }
+
+
+export async function getCash(req, res) {
+  try {
+    const findUser = await sql`
+        SELECT *
+        FROM stock_cash
+        WHERE email = ${req.user.email}
+        `;
+    if (findUser.rows[0]) {
+      res.status(200).json(findUser.rows[0]);
+    } else {
+      res.status(404).json({ message: "Invalid Session" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Invalid Session" });
+  }
+}
 export async function getStockQuote(req, res) {
-  setTimeout(() => {
-    
     const symbol = req.params.symbol.toUpperCase();
+    res.status(200).json(companies.filter((c)=> c.ticker === symbol)[0])
     // const apiUrl = `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${apiKey}`;
     // const data = await fetch(apiUrl);
     // const posts = await data.json();
     // return posts;
-    
-    res.status(200).json(companies.filter((c)=> c.ticker === symbol)[0])
-  },1000);
     // try {
+    
       //   const resultSelect = await sql`
       //       SELECT *
       //       FROM stock_companies
@@ -198,7 +219,6 @@ export async function getStockQuote(req, res) {
   
   // }
 }
-
 
 export async function updateCompany(company) {
   try {

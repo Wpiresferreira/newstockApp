@@ -7,8 +7,7 @@ import {
 } from "../controller/controller";
 // import { getLoggedUser } from "../data/api";
 // import Welcome from "../components/Welcome"
-import BoxLeft from "../components/BoxLeft";
-import BoxRigth from "../components/BoxRigth";
+import BoxWatchlist from "../components/BoxWatchlist";
 // import Dashboard from "../components/Dashboard";
 
 export default function Profile() {
@@ -178,12 +177,8 @@ export default function Profile() {
       <div className="flex flex-col">
         {watchlist.map((item, index) => (
           <div key={index} className="flex">
-            <BoxLeft ticker={item.ticker} />
-            <BoxRigth
-              handleDelete={handleDelete}
-              isEditMode={isEditMode}
-              ticker={item.ticker}
-            />
+            <BoxWatchlist ticker={item.ticker} />
+            
           </div>
         ))}
         {/* <div className="fa fa-bar-chart" />

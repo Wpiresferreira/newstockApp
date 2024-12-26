@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';      // Middleware to parse cookies from incoming requests
 import path  from 'path'; // To help the routes
 import {fileURLToPath} from 'url'; // To help the routes
-// import cors from 'cors' // To allow test the app in the same machine
+import cors from 'cors' // To allow test the app in the same machine
 import routes from './routes/routes.js';
 import * as apiController from './controllers/apiController.js';
 
@@ -68,6 +68,6 @@ app.listen(5000, async () => {
 
 apiController.updateProfile()
   
-setInterval(async () => {
+// setInterval(async () => {
   await apiController.updateData();
-}, 60000);
+// }, 60000);

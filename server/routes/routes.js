@@ -14,6 +14,7 @@ router.post("/api/login", dbController.login);
 router.post("/api/signup", dbController.signup);
 router.get("/api/watchlist", authenticateToken, dbController.getWatchlist);
 router.get("/api/assets", authenticateToken, dbController.getAssets);
+router.get("/api/cash", authenticateToken, dbController.getCash);
 router.put(
   "/api/add_to_watchlist",
   authenticateToken,

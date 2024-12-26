@@ -7,9 +7,7 @@ import {
 } from "../controller/controller";
 // import { getLoggedUser } from "../data/api";
 // import Welcome from "../components/Welcome"
-import BoxLeft from "../components/BoxLeft";
-import BoxRigth from "../components/BoxRigth";
-// import Dashboard from "../components/Dashboard";
+import BoxWatchlist from "../components/BoxWatchlist";
 
 export default function WatchlistPage() {
   const [watchlist, setWatchlist] = useState([]);
@@ -23,7 +21,7 @@ export default function WatchlistPage() {
     // Retrieve user information using the cookie
     async function getData() {
       const res = await getWatchlist();
-      console.log(res)
+      console.log(res);
       if (res.status > 201) {
         setIsLoading(false);
         return;
@@ -34,10 +32,9 @@ export default function WatchlistPage() {
     getData();
   }, []);
 
-useEffect(()=>{
-
-console.log(watchlist)
-},[watchlist])
+  useEffect(() => {
+    console.log(watchlist);
+  }, [watchlist]);
 
   useEffect(() => {
     async function getData() {
@@ -53,13 +50,13 @@ console.log(watchlist)
   }, []);
 
   useEffect(() => {
-    console.log(searchValue);
+    console.log(allCompanies);
     if (searchValue.length === 0) {
       setFilterCompanies([]);
     }
     if (searchValue.length > 0) {
       const listSorted = allCompanies.sort((a, b) => {
-        if (a.symbol < b.symbol) {
+        if (a.ticker < b.ticker) {
           return -1;
         } else {
           return 1;
@@ -67,30 +64,43 @@ console.log(watchlist)
       });
       const listFiltered = listSorted.filter(
         (company) =>
-          (company.symbol + " " + company.description).substring(
+          (company.ticker + " " + company.profile.name).substring(
             0,
             searchValue.length
           ) === searchValue.toUpperCase() ||
-          company.description.substring(0, searchValue.length) ===
-            searchValue.toUpperCase()
+          company.profile.name
+            .substring(0, searchValue.length)
+            .toUpperCase() === searchValue.toUpperCase()
       );
       setFilterCompanies(listFiltered ? listFiltered : []);
     }
   }, [searchValue, allCompanies]);
 
+  useEffect(() => {
+    console.log(filterCompanies);
+  }, [filterCompanies]);
+
   function handleSearchValueChange(e) {
     setSearchValue(e.target.value);
   }
 
-  async function handleAddButton() {
+  async function handleAddButton(text) {
     //Check if symbol is not null or ""
     if (searchValue == null || searchValue == "") {
       return;
     }
+    console.log(text);
+    var sValue;
+    if (text) {
+      sValue = text;
+    } else {
+      sValue = searchValue;
+    }
+    console.log(sValue);
 
     //Check if symbol is valid
     const checkValid = allCompanies.filter(
-      (company) => company.symbol === searchValue.split(" ")[0].toUpperCase()
+      (company) => company.ticker === sValue.split(" ")[0].toUpperCase()
     );
     if (!checkValid[0]) {
       alert("Ticker Invalid");
@@ -98,7 +108,7 @@ console.log(watchlist)
     }
     //Check if symbol is already on Watchlist
     const checkAlreadyInWatchlist = watchlist.filter(
-      (company) => company.ticker === searchValue.split(" ")[0].toUpperCase()
+      (company) => company.ticker === sValue.split(" ")[0].toUpperCase()
     );
     if (checkAlreadyInWatchlist[0]) {
       alert("Ticker Is Already Listed");
@@ -106,12 +116,12 @@ console.log(watchlist)
       return;
     }
 
-    const result = await addToWatchlist(searchValue.split(" ")[0]);
+    const result = await addToWatchlist(sValue.split(" ")[0]);
 
     if (result.status === 200) {
       setWatchlist([
         ...watchlist,
-        { ticker: searchValue.split(" ")[0].toUpperCase() },
+        { ticker: sValue.split(" ")[0].toUpperCase() },
       ]);
       setSearchValue("");
     }
@@ -174,20 +184,21 @@ console.log(watchlist)
             className={`text-left ${
               index % 2 === 0 ? " bg-sky-50 " : "bg-white"
             } hover:font-bold `}
-            onClick={(e) => setSearchValue(e.target.innerText)}
+            onClick={(e) => {
+              handleAddButton(e.target.innerText);
+            }}
           >
-            {company.symbol + " " + company.description}
+            {company.ticker + " " + company.profile.name}
           </li>
         ))}
       </ul>
       <div className="flex flex-col">
         {watchlist.map((item, index) => (
           <div key={index} className="flex">
-            <BoxLeft ticker={item.ticker} />
-            <BoxRigth
-              handleDelete={handleDelete}
-              isEditMode={isEditMode}
+            <BoxWatchlist
               ticker={item.ticker}
+              isEditMode={isEditMode}
+              handleDelete={handleDelete}
             />
           </div>
         ))}
