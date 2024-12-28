@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getQuote } from "../controller/controller";
 
-export default function BoxAsset({ item }) {
+export default function BoxAsset({ item, handleOnClick }) {
   const [isLoading, setIsLoading] = useState();
   useEffect(() => {
     console.log(item);
@@ -19,6 +19,7 @@ export default function BoxAsset({ item }) {
             height={60}
             priority={"true"}
             alt="Company logo"
+            onClick={handleOnClick}
             onError={() => {
               this.onError = null;
               this.src = "https://placehold.co/400x300";
@@ -40,12 +41,12 @@ export default function BoxAsset({ item }) {
       >
         <div className="flex flex-col items-end">
           <div className="text-black  text-[16px]">
-            {Number(item.quote.quote.c).toFixed(2)}
+            {Number(item.quote.quote.c).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits:2})}
           </div>
           <div className="text-black  text-[12px]">
             {item.quote.quote.dp > 0
-              ? "+" + Number(item.quote.quote.dp).toFixed(2)
-              : +Number(item.quote.quote.dp).toFixed(2)}
+              ? "+" + Number(item.quote.quote.dp).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits:2})
+              : +Number(item.quote.quote.dp).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits:2})}
             %
           </div>
         </div>
@@ -60,7 +61,7 @@ export default function BoxAsset({ item }) {
         )}
         <div className="flex flex-col items-end">
           <div className="font-bold">
-            ${(item.qt * item.quote.quote.c).toFixed(2)}
+            ${(item.qt * item.quote.quote.c).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits:2})}
           </div>
           <div className="font-bold">Qt: {item.qt}</div>
         </div>

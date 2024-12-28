@@ -37,7 +37,7 @@ export async function login(req, res) {
       return res
         .cookie("token", token, {
           httpOnly: true,
-          secure: true,
+          //secure: true,
           sameSite: "None",
         })
         .status(200)
@@ -92,7 +92,7 @@ export async function getWatchlist(req, res) {
       FROM stock_watchlist
       WHERE email = ${req.user.email}
       `;
-      console.log(findUser)
+      // console.log(findUser)
 
       res.status(200).json(findUser.rows);
     // if (findUser.rows[0]) {
@@ -119,6 +119,50 @@ export async function addToWatchlist(req, res) {
     } else {
       res.status(404).json({ message: "Invalid Session" });
     }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Invalid Session" });
+  }
+}
+export async function buyStocks(req, res) {
+  const { ticker, qt, unit_price } = req.body;
+  const {email} = req.user
+  console.log( email)
+console.log(ticker)
+console.log( qt)
+console.log( unit_price)
+  try {
+    const insertUser = await sql`
+SELECT buy_stocks(${email}, ${ticker}, ${qt}, ${unit_price}) as transaction_success;
+        `;
+    console.log(insertUser);
+    // if (insertUser.rowCount == 1) {
+      res.status(200).json({ message: `BUY sucessfully!` });
+    // } else {
+    //   res.status(404).json({ message: "Invalid Session" });
+    // }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Invalid Session" });
+  }
+}
+export async function sellStocks(req, res) {
+  const { ticker, qt, unit_price } = req.body;
+  const {email} = req.user
+  console.log( email)
+console.log(ticker)
+console.log( qt)
+console.log( unit_price)
+  try {
+    const insertUser = await sql`
+SELECT sell_stocks(${email}, ${ticker}, ${qt}, ${unit_price}) as transaction_success;
+        `;
+    console.log(insertUser);
+    // if (insertUser.rowCount == 1) {
+      res.status(200).json({ message: `SELL sucessfully!` });
+    // } else {
+    //   res.status(404).json({ message: "Invalid Session" });
+    // }
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Invalid Session" });

@@ -8,14 +8,15 @@ export var companies = [
   { ticker: "NVDA" },
   { ticker: "MSFT" },
   { ticker: "GOOG" },
-  { ticker: "TSLA" },
-  { ticker: "AMZN" }
+  { ticker: "TSLA" }
   ,
-  { ticker: "META" },
-  { ticker: "AVGO" },
-  { ticker: "BRK-B" },
-  { ticker: "WMT" }
-  ,
+  // { ticker: "AMZN" }
+  // ,
+  // { ticker: "META" },
+  // { ticker: "AVGO" },
+  // { ticker: "BRK-B" },
+  // { ticker: "WMT" }
+  // ,
   // { ticker: "LLY" },
   // { ticker: "JPM" },
   // { ticker: "V" },
@@ -57,10 +58,10 @@ export var companies = [
   // { ticker: "CAT" },
   // { ticker: "QCOM" },
   // { ticker: "VALE" },
-  // { ticker: "PBR" },
+   { ticker: "PBR" }
   // { ticker: "ITUB" },
   // { ticker: "BBD" },
-  { ticker: "ABEV" }
+  // { ticker: "ABEV" }
 ];
 
 export async function updateData() {
@@ -98,11 +99,11 @@ export async function getStockSymbols(req, res) {
 
 async function refreshStockQuote(symbol) {
   // const symbol = req.params.symbol.toUpperCase();
-  console.log(symbol)
+  // console.log(symbol)
   const apiUrl = `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${apiKey}`;
   const data = await fetch(apiUrl);
   const posts = await data.json();
-  console.log(posts)
+  // console.log(posts)
   return posts;
 }
 // export async function getStockQuote(req, res){

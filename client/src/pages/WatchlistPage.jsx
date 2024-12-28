@@ -8,8 +8,9 @@ import {
 // import { getLoggedUser } from "../data/api";
 // import Welcome from "../components/Welcome"
 import BoxWatchlist from "../components/BoxWatchlist";
+import { Link, useNavigate } from "react-router-dom";
 
-export default function WatchlistPage() {
+export default function WatchlistPage({doSetQuote}) {
   const [watchlist, setWatchlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [allCompanies, setAllCompanies] = useState([]);
@@ -17,6 +18,8 @@ export default function WatchlistPage() {
   const [searchValue, setSearchValue] = useState("");
   const [filterCompanies, setFilterCompanies] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
+  const navigate = useNavigate();
+
   useEffect(() => {
     // Retrieve user information using the cookie
     async function getData() {
@@ -32,9 +35,6 @@ export default function WatchlistPage() {
     getData();
   }, []);
 
-  useEffect(() => {
-    console.log(watchlist);
-  }, [watchlist]);
 
   useEffect(() => {
     async function getData() {
@@ -50,7 +50,6 @@ export default function WatchlistPage() {
   }, []);
 
   useEffect(() => {
-    console.log(allCompanies);
     if (searchValue.length === 0) {
       setFilterCompanies([]);
     }
@@ -76,9 +75,6 @@ export default function WatchlistPage() {
     }
   }, [searchValue, allCompanies]);
 
-  useEffect(() => {
-    console.log(filterCompanies);
-  }, [filterCompanies]);
 
   function handleSearchValueChange(e) {
     setSearchValue(e.target.value);
@@ -141,6 +137,16 @@ export default function WatchlistPage() {
     }
   }
 
+  function handleOnClick(e) {
+    console.log(e.target.closest("li").id.split("_")[1]);
+    if (e.target.closest("li").id.split("_")[1] === "box") {
+      const tickerDest = e.target.closest("li").id.split("_")[0];
+      navigate("/transactions");
+      console.log(allCompanies.filter((company)=>company.ticker === tickerDest )[0])
+      doSetQuote(allCompanies.filter((company)=>company.ticker === tickerDest )[0])
+    }
+  }
+
   if (isLoading) return <div>Loading...</div>;
 
   return (
@@ -192,15 +198,21 @@ export default function WatchlistPage() {
           </li>
         ))}
       </ul>
-      <div className="flex flex-col">
+      <ul className="flex flex-col">
         {watchlist.map((item, index) => (
-          <div key={index} className="flex">
+          <li
+            key={index}
+            id={`${item.ticker}_box`}
+            className="flex"
+          >
             <BoxWatchlist
               ticker={item.ticker}
               isEditMode={isEditMode}
               handleDelete={handleDelete}
+              handleOnClick={handleOnClick}
+
             />
-          </div>
+          </li>
         ))}
         {/* <div className="fa fa-bar-chart" />
         <div className="fa fa-user-o" />
@@ -212,7 +224,7 @@ export default function WatchlistPage() {
         <div className="fa fa-pie-chart" />
         <div className="fa fa-usd" /> */}
         {/* {loggedUser ? <Dashboard loggedUser={loggedUser}/> : <Welcome />} */}
-      </div>
+      </ul>
     </div>
   );
 }

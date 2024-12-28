@@ -11,20 +11,28 @@ import Assets from "./pages/Assets";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import Transactions from "./pages/Transactions";
+import { useState } from "react";
 
 function App() {
+  const [quote, setQuote] = useState();
+
+  function doSetQuote(company){
+    setQuote(company)
+  }
+
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
-          <Route path="watchlist" element={<WatchlistPage />} />
+          <Route path="watchlist" element={<WatchlistPage doSetQuote={doSetQuote}/>} />
           <Route path="signup" element={<Signup />} />
           <Route path="logout" element={<Logout />} />
-          <Route path="assets" element={<Assets />} />
+          <Route path="assets" element={<Assets doSetQuote={doSetQuote} />} />
           <Route path="profile" element={<Profile />} />
-          <Route path="transactions" element={<Transactions />} />
+          <Route path="transactions" element={<Transactions doSetQuote={doSetQuote} quote={quote}/>} />
           <Route path="logout" element={<Logout />} />
           <Route path="*" element={<NotFound />} />
           {/*<Route path="/courses/:programCode" element={<Courses />} />

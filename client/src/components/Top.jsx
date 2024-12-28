@@ -50,7 +50,7 @@ export default function Top() {
 
   return (
     <div>
-      <div className="grid grid-cols-[20%_auto_20%] bg-sky-900 place-items-center w-[100vw] max-w-[430px] min-h-[70px] mt-4">
+      <div className="grid grid-cols-[20%_auto_20%] bg-sky-900 place-items-center w-[100vw] max-w-[430px] min-h-[70px] pt-4 pb-2">
         <button className="bg-sky-50 h-12 rounded-full w-12 flex justify-center items-center">
           <span
             onClick={() => {
@@ -73,7 +73,7 @@ export default function Top() {
         </button>
       </div>
       {showSideBar && (
-        <div className="z-10 absolute border-sky-500 border-t-2 bg-sky-100">
+        <div className=" cursor-pointer z-10 absolute border-sky-500 border-t-2 bg-sky-100">
           {itemsMenu.map(
             (item, index) =>
               ((

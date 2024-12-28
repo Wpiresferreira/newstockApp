@@ -38,8 +38,8 @@ export default function MiniBox({ ticker }) {
     <div className="bg-black">
       {/* {console.log('Rendered at ' + new Date(Date.now()))} */}
       <span className={`ml-6  text-xl my-2 text-${color}`}>{ticker}</span>  
-      <span className={`ml-2 text-xl my-2 text-${color}`}>${Number(quote.quote.c).toFixed(2)}</span>  
-      <span className={`ml-2 text-xl my-2 text-${color}`}>{Number(quote.quote.dp).toFixed(2)}%</span>  
+      <span className={`ml-2 text-xl my-2 text-${color}`}>${Number(quote.quote.c).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits:2})}</span>  
+      <span className={`ml-2 text-xl my-2 text-${color}`}>{Number(quote.quote.dp).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits:2})}%</span>  
       <span className={`ml-2 text-2xl text-${color} ${arrow}`}></span>  
     </div>
   );
@@ -77,7 +77,7 @@ export default function MiniBox({ ticker }) {
 //             <span className="text-white font-bold">
 //               ${(quote.quote.c)}
 //             </span>
-//             {/* <span className="text-white font-bold">{Number(quote.quote.dp).toFixed(2)}%</span>
+//             {/* <span className="text-white font-bold">{Number(quote.quote.dp).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits:2})}%</span>
 //             <span className="text-red-500 fa fa-arrow-up"></span> */}
 //           </div>
 //         </div>

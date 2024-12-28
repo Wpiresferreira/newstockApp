@@ -20,6 +20,16 @@ router.put(
   authenticateToken,
   dbController.addToWatchlist
 );
+router.post(
+  "/api/sellstocks",
+  authenticateToken,
+  dbController.sellStocks
+);
+router.post(
+  "/api/buystocks",
+  authenticateToken,
+  dbController.buyStocks
+);
 router.delete(
     "/api/remove_from_watchlist",
     authenticateToken,

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getQuote } from "../controller/controller";
 
-export default function BoxWatchlist({ ticker, handleDelete, isEditMode}) {
+export default function BoxWatchlist({ ticker, handleDelete, handleOnClick, isEditMode}) {
   const [company, setCompany] = useState();
   const [isLoading, setIsLoading] = useState();
   useEffect(() => {
@@ -25,13 +25,14 @@ export default function BoxWatchlist({ ticker, handleDelete, isEditMode}) {
       {company && (
         <>
           <div className="flex rounded-l-md  bg-sky-100 ml-2 mt-2 w-[67vw]">
-            <div className="m-3 rounded-full border-2 border-white overflow-hidden max-h-[40px] max-w-[40px] min-h-[40px] min-w-[40px]">
+            <div className="cursor-pointer m-3 rounded-full border-2 border-white overflow-hidden max-h-[40px] max-w-[40px] min-h-[40px] min-w-[40px]">
               <img
                 src={company.profile.logo}
                 width={60}
                 height={60}
                 priority={"true"}
                 alt="Company logo"
+                onClick={handleOnClick}
                 onError={() => {
                   this.onError = null;
                   this.src = "https://placehold.co/400x300";
@@ -53,12 +54,12 @@ export default function BoxWatchlist({ ticker, handleDelete, isEditMode}) {
           >
             <div className="flex flex-col items-end">
               <div className="text-black font-bold text-[16px]">
-                {Number(company.quote.c).toFixed(2)}
+                {Number(company.quote.c).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits:2})}
               </div>
               <div className="text-black font-bold text-[12px]">
                 {company.quote.dp > 0
-                  ? "+" + Number(company.quote.dp).toFixed(2)
-                  : +Number(company.quote.dp).toFixed(2)}
+                  ? "+" + Number(company.quote.dp).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits:2})
+                  : +Number(company.quote.dp).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits:2})}
                 %
               </div>
             </div>
@@ -70,7 +71,7 @@ export default function BoxWatchlist({ ticker, handleDelete, isEditMode}) {
                     handleDelete(e.target.closest(".divbox").id.split("_")[0])
                   }
                   className={
-                    isEditMode ? "fa fa-minus-circle text-red-600 ml-2" : null
+                    isEditMode ? " cursor-pointer fa fa-minus-circle text-red-600 ml-2" : null
                   }
                 ></span>
               </div>
@@ -82,7 +83,7 @@ export default function BoxWatchlist({ ticker, handleDelete, isEditMode}) {
                     handleDelete(e.target.closest(".divbox").id.split("_")[0])
                   }
                   className={
-                    isEditMode ? "fa fa-minus-circle text-red-600 ml-2" : null
+                    isEditMode ? " cursor-pointer fa fa-minus-circle text-red-600 ml-2" : null
                   }
                 ></span>
               </div>

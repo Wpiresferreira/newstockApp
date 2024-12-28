@@ -1,6 +1,6 @@
 //const url = "http://142.59.11.227:5000"
 const url = ""
-//const url = "http://localhost:5000"
+// const url = "http://localhost:5000"
 
 export async function doLogin(email, password) {
     const myHeaders = new Headers();
@@ -82,6 +82,62 @@ export async function getWatchlist() {
   
     try {
       console.log(req)
+      return await fetch(req).then(async (res) => {
+        if (res.status === 204) {
+          return {
+            status: res.status,
+            response: { message: "No Authenticated" },
+          };
+        }
+        return { status: res.status, response: await res.json() };
+      });
+    } catch (e) {
+      console.log(e);
+      return { status: 500, response: { message: "Check connection" } };
+    }
+  }
+export async function doBuyStocks( ticker, qt, unit_price) {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Accept", "*/*");
+  
+    const req = new Request(url + "/api/buystocks", {
+      method: "POST",
+      headers: myHeaders,
+      body: JSON.stringify({ ticker: ticker, qt: qt, unit_price : unit_price}),
+      credentials: "include",
+    });
+  
+    try {
+      // console.log(req)
+      return await fetch(req).then(async (res) => {
+        if (res.status === 204) {
+          return {
+            status: res.status,
+            response: { message: "No Authenticated" },
+          };
+        }
+        return { status: res.status, response: await res.json() };
+      });
+    } catch (e) {
+      console.log(e);
+      return { status: 500, response: { message: "Check connection" } };
+    }
+  }
+export async function doSellStocks( ticker, qt, unit_price) {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Accept", "*/*");
+  
+    const req = new Request(url + "/api/sellstocks", {
+      method: "POST",
+      headers: myHeaders,
+      body: JSON.stringify({ ticker: ticker, qt: qt, unit_price : unit_price}),
+      credentials: "include",
+    });
+  
+    try {
+      // console.log(req)
       return await fetch(req).then(async (res) => {
         if (res.status === 204) {
           return {
