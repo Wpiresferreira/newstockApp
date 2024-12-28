@@ -5,10 +5,6 @@ import {companies} from './apiController.js'
 
 export async function login(req, res) {
   const { email, password } = req.body;
-
-  //delete before publish
-  //  const  email = 'wagner_pires@icloud.com'
-  //  const password = '123'
   // Validate if there is username
   if (!email) {
     return res.status(401).json({ message: "Please, insert your username!" });

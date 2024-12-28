@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { checkIsLogged } from "../controller/controller";
 // import { checkIsLogged } from "../controller/controller";
 
 export default function Top() {
@@ -7,6 +8,19 @@ export default function Top() {
   const location = useLocation()
   const [showSideBar, setShowSideBar] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
+
+  useEffect(()=>{
+    async function getData(){
+      const resIsLogged = await checkIsLogged()
+      console.log(resIsLogged)
+      if(resIsLogged.status == 200){
+        console.log("Is Logged")
+      }else{
+        console.log("NOT Logged")
+      }
+    }
+    getData()
+  },[])
 
   async function handleClickSideBar() {
     setShowSideBar(!showSideBar);

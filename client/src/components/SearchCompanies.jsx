@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllCompanies } from "../controller/controller";
 
-export default function SearchCompanies({doSetQuote}) {
+export default function SearchCompanies({doSetQuote, handleAddButton}) {
   const [allCompanies, setAllCompanies] = useState([]);
   const [isLoadingAllCompanies, setIsLoadingAllCompanies] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -77,9 +77,10 @@ console.log(searchValue)
           <li
             key={index}
             className={`text-left ${
-              index % 2 === 0 ? " bg-sky-50 " : "bg-white"
-            } hover:font-bold `}
+              index % 2 === 0 ? " bg-sky-100 " : "bg-white"
+            } hover:font-bold w-[300px]`}
             onClick={(e) => {
+              setSearchValue("")
               handleAddButton(e.target.innerText);
             }}
           >

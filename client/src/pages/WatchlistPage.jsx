@@ -141,9 +141,7 @@ export default function WatchlistPage({doSetQuote}) {
     console.log(e.target.closest("li").id.split("_")[1]);
     if (e.target.closest("li").id.split("_")[1] === "box") {
       const tickerDest = e.target.closest("li").id.split("_")[0];
-      navigate("/transactions");
-      console.log(allCompanies.filter((company)=>company.ticker === tickerDest )[0])
-      doSetQuote(allCompanies.filter((company)=>company.ticker === tickerDest )[0])
+      navigate("/transactions/"+tickerDest);
     }
   }
 

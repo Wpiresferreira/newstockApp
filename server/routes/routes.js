@@ -6,7 +6,11 @@ import * as apiController from "../controllers/apiController.js";
 
 const router = express.Router();
 
-// router.get("/api/islogged", authenticateToken, dbController.getW);
+router.get("/api/islogged", authenticateToken, (req,res)=>{
+const {email} = req;
+
+res.status(200).json.apply({message: "user "+ email + "logged"})
+});
 
 
 //Database Routes

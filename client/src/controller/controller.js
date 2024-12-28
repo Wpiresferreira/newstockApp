@@ -49,25 +49,25 @@ export async function doLogin(email, password) {
   }
 
 
-// export async function checkIsLogged() {
-//     const myHeaders = new Headers();
-//     myHeaders.append("Content-Type", "application/json");
-//     myHeaders.append("Accept", "*/*");
+export async function checkIsLogged() {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Accept", "*/*");
   
-//     const req = new Request(url + "/api/islogged", {
-//       method: "GET",
-//       headers: myHeaders,
-//       credentials: "include", // Include cookies in the request
-//     });
-//     try {
-//       return await fetch(req).then(async (res) => {
-//         const response = { status: res.status, response: await res.json() }
-//         return response;
-//       });
-//     } catch (e) {
-//       return { status: 500, response: { message: "Check connection" } };
-//     }
-//   }
+    const req = new Request(url + "/api/islogged", {
+      method: "GET",
+      headers: myHeaders,
+      credentials: "include", // Include cookies in the request
+    });
+    try {
+      return await fetch(req).then(async (res) => {
+        const response = { status: res.status, response: await res.json() }
+        return response;
+      });
+    } catch (e) {
+      return { status: 500, response: { message: "Check connection" } };
+    }
+  }
 
 export async function getWatchlist() {
     const myHeaders = new Headers();

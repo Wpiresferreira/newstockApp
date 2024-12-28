@@ -1,6 +1,5 @@
 CREATE OR REPLACE FUNCTION buy_stocks(
     value_email VARCHAR,
-    value_type VARCHAR,
     value_ticker VARCHAR,
     value_qt INTEGER,
     value_unit_price DECIMAL
