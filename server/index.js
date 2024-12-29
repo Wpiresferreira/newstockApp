@@ -16,11 +16,11 @@ const __dirname =   path.dirname(__filename);
 
 // const origin = 'https://react-registration-app.vercel.app'
 // const origin = 'http://localhost:3000'
-const origin = 'http://localhost:3001'
+// const origin = 'http://localhost:3001'
 
 const app = express();
 // app.use(cors({ origin: origin})) // Allow credentials
-app.use(cors({ origin: origin, credentials: true,})) // Allow credentials
+// app.use(cors({ origin: origin, credentials: true,})) // Allow credentials
 
 // app.use(express.static('public'));
 // Serve the static files from the React app
