@@ -104,8 +104,7 @@ export async function doBuyStocks( ticker, qt, unit_price) {
     const req = new Request(url + "/api/buystocks", {
       method: "POST",
       headers: myHeaders,
-      body: JSON.stringify({ ticker: ticker, qt: qt, unit_price : unit_price}),
-      credentials: "include",
+      body: JSON.stringify({ token: localStorage.getItem("token"), ticker: ticker, qt: qt, unit_price : unit_price}),
     });
   
     try {
