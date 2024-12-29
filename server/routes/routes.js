@@ -15,10 +15,12 @@ res.status(200).json.apply({message: "user "+ email + "logged"})
 
 //Database Routes
 router.post("/api/login", dbController.login);
+router.post("/api/watchlist", authenticateToken, dbController.getWatchlist);
+
+
 router.post("/api/signup", dbController.signup);
-router.get("/api/watchlist", authenticateToken, dbController.getWatchlist);
-router.get("/api/assets", authenticateToken, dbController.getAssets);
-router.get("/api/cash", authenticateToken, dbController.getCash);
+router.post("/api/assets", authenticateToken, dbController.getAssets);
+router.post("/api/cash", authenticateToken, dbController.getCash);
 router.put(
   "/api/add_to_watchlist",
   authenticateToken,
@@ -45,9 +47,9 @@ router.delete(
 
 //API Routes
 // router.get("/api/profile/:symbol", authenticateToken, apiController.getStockProfile);
-router.get("/api/quote/:symbol", dbController.getStockQuote);
+router.post("/api/quote/:ticker", dbController.getStockQuote);
 // router.get("/symbols", authenticateToken, apiController.getStockSymbols);
-router.get("/api/symbols", apiController.getStockSymbols);
+router.post("/api/symbols", apiController.getStockSymbols);
 router.get('/api/logout', dbController.logout);
 
 

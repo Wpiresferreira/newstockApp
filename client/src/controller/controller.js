@@ -1,6 +1,6 @@
 //const url = "http://142.59.11.227:5000"
-const url = ""
-// const url = "http://localhost:5000"
+// const url = ""
+const url = "http://localhost:5000"
 
 export async function doLogin(email, password) {
     const myHeaders = new Headers();
@@ -10,12 +10,12 @@ export async function doLogin(email, password) {
     const req = new Request(url + "/api/login", {
       method: "POST",
       body: JSON.stringify({ email: email, password: password }),
-      headers: myHeaders,
-      credentials: "include", // Include cookies in the request
+      headers: myHeaders
     });
     try {
       return await fetch(req).then(async (res) => {
         const response = { status: res.status, response: await res.json() }
+        console.log("controller response")
         console.log(response)
         return response;
       });
@@ -75,9 +75,9 @@ export async function getWatchlist() {
     myHeaders.append("Accept", "*/*");
   
     const req = new Request(url + "/api/watchlist", {
-      method: "GET",
+      method: "POST",
       headers: myHeaders,
-      credentials: "include",
+      body: JSON.stringify({token: localStorage.getItem("token")})
     });
   
     try {
@@ -162,9 +162,8 @@ export async function doSellStocks( ticker, qt, unit_price) {
   
     const req = new Request(url + "/api/add_to_watchlist", {
       method: "PUT",
-      body: JSON.stringify({ticker: symbol}),
+      body: JSON.stringify({ticker: symbol, token: localStorage.getItem("token")}),
       headers: myHeaders,
-      credentials: "include",
     });
   
     try {
@@ -193,9 +192,8 @@ export async function doSellStocks( ticker, qt, unit_price) {
   
     const req = new Request(url + "/api/remove_from_watchlist", {
       method: "DELETE",
-      body: JSON.stringify({ticker: symbol}),
+      body: JSON.stringify({ticker: symbol, token: localStorage.getItem("token")}),
       headers: myHeaders,
-      credentials: "include",
     });
   
     try {
@@ -247,9 +245,9 @@ export async function doSellStocks( ticker, qt, unit_price) {
     myHeaders.append("Accept", "*/*");
   
     const req = new Request(url + "/api/assets", {
-      method: "GET",
+      method: "POST",
       headers: myHeaders,
-      credentials: "include",
+      body: JSON.stringify({token: localStorage.getItem("token")})
     });
   
     try {
@@ -274,9 +272,9 @@ export async function doSellStocks( ticker, qt, unit_price) {
     myHeaders.append("Accept", "*/*");
   
     const req = new Request(url + "/api/cash", {
-      method: "GET",
+      method: "POST",
       headers: myHeaders,
-      credentials: "include",
+      body: JSON.stringify({token: localStorage.getItem("token")})
     });
   
     try {
@@ -301,9 +299,9 @@ export async function doSellStocks( ticker, qt, unit_price) {
     myHeaders.append("Accept", "*/*");
   
     const req = new Request(url + "/api/quote/"+ ticker, {
-      method: "GET",
+      method: "POST",
       headers: myHeaders,
-      credentials: "include",
+      body: JSON.stringify({token: localStorage.getItem("token")})
     });
   
     try {
@@ -328,9 +326,11 @@ export async function doSellStocks( ticker, qt, unit_price) {
     myHeaders.append("Accept", "*/*");
   
     const req = new Request(url + "/api/symbols", {
-      method: "GET",
+      method: "POST",
       headers: myHeaders,
-      credentials: "include",
+      body: JSON.stringify({token: localStorage.getItem("token")})
+
+      // credentials: "include",
     });
   
     try {

@@ -5,7 +5,7 @@ export default function BoxWatchlist({ ticker, handleDelete, handleOnClick, isEd
   const [company, setCompany] = useState();
   const [isLoading, setIsLoading] = useState();
   useEffect(() => {
-    // Retrieve user information using the cookie
+    // Retrieve quote
     async function getData() {
       const res = await getQuote(ticker);
       console.log(res);
@@ -54,12 +54,12 @@ export default function BoxWatchlist({ ticker, handleDelete, handleOnClick, isEd
           >
             <div className="flex flex-col items-end">
               <div className="text-black font-bold text-[16px]">
-                {Number(company.quote.c).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits:2})}
+                {Number(company.quote.c).toLocaleString("en-CA", {minimumFractionDigits: 2, maximumFractionDigits:2})}
               </div>
               <div className="text-black font-bold text-[12px]">
                 {company.quote.dp > 0
-                  ? "+" + Number(company.quote.dp).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits:2})
-                  : +Number(company.quote.dp).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits:2})}
+                  ? "+" + Number(company.quote.dp).toLocaleString("en-CA", {minimumFractionDigits: 2, maximumFractionDigits:2})
+                  : +Number(company.quote.dp).toLocaleString("en-CA", {minimumFractionDigits: 2, maximumFractionDigits:2})}
                 %
               </div>
             </div>

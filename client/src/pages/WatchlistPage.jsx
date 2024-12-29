@@ -5,10 +5,8 @@ import {
   getWatchlist,
   removeFromWatchlist,
 } from "../controller/controller";
-// import { getLoggedUser } from "../data/api";
-// import Welcome from "../components/Welcome"
 import BoxWatchlist from "../components/BoxWatchlist";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function WatchlistPage({doSetQuote}) {
   const [watchlist, setWatchlist] = useState([]);
@@ -21,7 +19,7 @@ export default function WatchlistPage({doSetQuote}) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Retrieve user information using the cookie
+    // Retrieve user information using the localStorage
     async function getData() {
       const res = await getWatchlist();
       console.log(res);
@@ -80,23 +78,15 @@ export default function WatchlistPage({doSetQuote}) {
     setSearchValue(e.target.value);
   }
 
-  async function handleAddButton(text) {
+  async function handleAddButton(ticker) {
     //Check if symbol is not null or ""
     if (searchValue == null || searchValue == "") {
       return;
     }
-    console.log(text);
-    var sValue;
-    if (text) {
-      sValue = text;
-    } else {
-      sValue = searchValue;
-    }
-    console.log(sValue);
-
+   
     //Check if symbol is valid
     const checkValid = allCompanies.filter(
-      (company) => company.ticker === sValue.split(" ")[0].toUpperCase()
+      (company) => company.ticker === ticker.split(" ")[0].toUpperCase()
     );
     if (!checkValid[0]) {
       alert("Ticker Invalid");
@@ -104,7 +94,7 @@ export default function WatchlistPage({doSetQuote}) {
     }
     //Check if symbol is already on Watchlist
     const checkAlreadyInWatchlist = watchlist.filter(
-      (company) => company.ticker === sValue.split(" ")[0].toUpperCase()
+      (company) => company.ticker === ticker.split(" ")[0].toUpperCase()
     );
     if (checkAlreadyInWatchlist[0]) {
       alert("Ticker Is Already Listed");
@@ -112,12 +102,12 @@ export default function WatchlistPage({doSetQuote}) {
       return;
     }
 
-    const result = await addToWatchlist(sValue.split(" ")[0]);
-
+    const result = await addToWatchlist(ticker.split(" ")[0]);
+    console.log(result)
     if (result.status === 200) {
       setWatchlist([
         ...watchlist,
-        { ticker: sValue.split(" ")[0].toUpperCase() },
+        { ticker: ticker.split(" ")[0].toUpperCase() },
       ]);
       setSearchValue("");
     }
@@ -164,7 +154,7 @@ export default function WatchlistPage({doSetQuote}) {
           placeholder="type the ticker"
         ></input>
         <button
-          onClick={handleAddButton}
+          onClick={()=> handleAddButton(searchValue)}
           className="mx-2 bg-sky-900 hover:bg-sky-500 text-white font-bold py-2 px-4 rounded"
         >
           <span className="fa fa-plus-circle text-white mr-2"></span>Add

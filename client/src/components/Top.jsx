@@ -5,37 +5,13 @@ import { checkIsLogged } from "../controller/controller";
 
 export default function Top() {
   const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
   const [showSideBar, setShowSideBar] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
 
-  useEffect(()=>{
-    async function getData(){
-      const resIsLogged = await checkIsLogged()
-      console.log(resIsLogged)
-      if(resIsLogged.status == 200){
-        console.log("Is Logged")
-      }else{
-        console.log("NOT Logged")
-      }
-    }
-    getData()
-  },[])
-
-  async function handleClickSideBar() {
+  function handleClickSideBar() {
     setShowSideBar(!showSideBar);
-    // if(showSideBar){
-    //   const res = await checkIsLogged();
-    //       console.log(res.status)
-    //       if (res.status >=300 ) {
-    //         setIsLogged(false);
-    //         // setIsLoading(false);
-    //         return;
-    //       }
-    //       // setIsLoading(false);
-    //       setIsLogged(true);
-    //     }
-    }
+  }
 
   const itemsMenu = [
     { label: "Login", icon: "fa-user-circle-o", href: "/login", logged: false },
@@ -90,11 +66,11 @@ export default function Top() {
         <div className=" cursor-pointer z-10 absolute border-sky-500 border-t-2 bg-sky-100">
           {itemsMenu.map(
             (item, index) =>
-              ((
-                // isLogged && 
-                item.logged) || (!isLogged && !item.logged)) && (
+              (// isLogged &&
+              item.logged ||
+                (!isLogged && !item.logged)) && (
                 <div
-                key={index}
+                  key={index}
                   onClick={() => {
                     setShowSideBar(!showSideBar);
                     navigate(item.href);

@@ -30,7 +30,7 @@ export default function BoxAsset({ item, handleOnClick }) {
           <div className="text-left text-black font-bold text-[16px]">
             {item.ticker}
           </div>
-          <div className="text-black text-left text-nowrap text-[12px]">
+          <div className=" overflow-hidden text-black text-left text-nowrap text-[12px]">
             {item.quote.profile.name}
           </div>
         </div>
@@ -41,12 +41,12 @@ export default function BoxAsset({ item, handleOnClick }) {
       >
         <div className="flex flex-col items-end">
           <div className="text-black  text-[16px]">
-            {Number(item.quote.quote.c).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits:2})}
+            {Number(item.quote.quote.c).toLocaleString("en-CA", {minimumFractionDigits: 2, maximumFractionDigits:2})}
           </div>
           <div className="text-black  text-[12px]">
             {item.quote.quote.dp > 0
-              ? "+" + Number(item.quote.quote.dp).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits:2})
-              : +Number(item.quote.quote.dp).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits:2})}
+              ? "+" + Number(item.quote.quote.dp).toLocaleString("en-CA", {minimumFractionDigits: 2, maximumFractionDigits:2})
+              : +Number(item.quote.quote.dp).toLocaleString("en-CA", {minimumFractionDigits: 2, maximumFractionDigits:2})}
             %
           </div>
         </div>
@@ -59,9 +59,9 @@ export default function BoxAsset({ item, handleOnClick }) {
             <span className="text-3xl fa fa-caret-down text-red-400" />
           </div>
         )}
-        <div className="flex flex-col items-end">
+        <div className="flex flex-col items-end w-[85px]">
           <div className="font-bold">
-            ${(item.qt * item.quote.quote.c).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits:2})}
+            ${(item.qt * item.quote.quote.c).toLocaleString("en-CA", {minimumFractionDigits: 2, maximumFractionDigits:2})}
           </div>
           <div className="font-bold">Qt: {item.qt}</div>
         </div>

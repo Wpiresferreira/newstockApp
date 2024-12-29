@@ -144,7 +144,7 @@ console.log(selectedCompany)
                 </div>
                 <div>
                   {selectedCompany
-                    ? selectedCompany.quote.dp.toLocaleString(undefined, {
+                    ? selectedCompany.quote.dp.toLocaleString("en-CA", {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       }) + "%"
@@ -161,7 +161,7 @@ console.log(selectedCompany)
               </div>
               <div className="justify-self-end self-center  p-2">
                 $
-                {selectedCompany.quote.pc.toLocaleString(undefined, {
+                {selectedCompany.quote.pc.toLocaleString("en-CA", {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 })}
@@ -169,7 +169,7 @@ console.log(selectedCompany)
               <div className="justify-self-start self-center p-2">Open</div>
               <div className="justify-self-end self-center p-2">
                 $
-                {selectedCompany.quote.o.toLocaleString(undefined, {
+                {selectedCompany.quote.o.toLocaleString("en-CA", {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 })}
@@ -177,7 +177,7 @@ console.log(selectedCompany)
               <div className="justify-self-start self-center p-2">High</div>
               <div className="justify-self-end self-center p-2">
                 $
-                {selectedCompany.quote.h.toLocaleString(undefined, {
+                {selectedCompany.quote.h.toLocaleString("en-CA", {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 })}
@@ -185,7 +185,7 @@ console.log(selectedCompany)
               <div className="justify-self-start self-center p-2">Low</div>
               <div className="justify-self-end self-center p-2 ">
                 $
-                {selectedCompany.quote.l.toLocaleString(undefined, {
+                {selectedCompany.quote.l.toLocaleString("en-CA", {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 })}

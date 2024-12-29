@@ -1,43 +1,29 @@
 import { useState } from "react";
 import { doLogin } from "../controller/controller";
 import { useNavigate } from "react-router-dom";
-// import Alert from "../components/Alert";
 
 export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [alertMessage, setAlertMessage] = useState("");
-  // const [typeAlert, setTypeAlert] = useState("");
-  // const [showMessage, setShowMessage] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
     const result = await doLogin(email, password);
-    if (result.status) {
-      setPassword("");
-      // setAlertMessage(result.response.message);
-      if (result.status < 300) {
-        // setTypeAlert("sucess");
-        setTimeout(() => {
-          navigate("/watchlist");
-        }, 1000);
-      } else {
-        // setTypeAlert("alert");
-      }
-      // setShowMessage(true);
+    console.log(await result)
+    setPassword("");
+    if (result.status==200) {
+      localStorage.setItem("token",result.response.token)
+      navigate("/watchlist");
     }
   }
-  // function hideMessage(){
-  //   setShowMessage(false);
-  // };
 
   return (
     <div className="flex justify-center items-center min-h-[70vh] h-full">
       <form className="mx-4 flex items-center flex-col p-5 bg-sky-100 shadow-lg rounded-xl w-[90vw] border border-solid border-gray-300">
         <h1 className="my-4 text-lg font-bold">Login</h1>
         <div className="w-full">
-          <label className="w-full block text-left" >Email</label>
+          <label className="w-full block text-left">Email</label>
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}

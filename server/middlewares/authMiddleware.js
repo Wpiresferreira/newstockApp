@@ -3,7 +3,8 @@ import config from "../config/config.js";
 
 // Middleware to verify if a user is authenticated
 export function authenticateToken(req, res, next) {
-  const token = req.cookies.token;
+  const token = req.body.token;
+  console.log(token)
 
   // If no token is provided, return unauthorized error
   if (!token) {
