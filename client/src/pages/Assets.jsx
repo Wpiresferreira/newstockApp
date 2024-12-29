@@ -98,6 +98,8 @@ export default function Assets() {
         <BoxCash item={cash} />
         {assetsQuotes &&
           assetsQuotes.map((asset, index) => (
+
+            asset.qt >0 &&
             <li key={index} id={`${asset.ticker}_box`} className="flex">
               <BoxAsset item={asset} handleOnClick={handleOnClick} />
             </li>
