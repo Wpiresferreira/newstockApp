@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import SearchCompanies from "../components/SearchCompanies";
-import Title from "../components/Title";
 import { doBuyStocks, doSellStocks, getQuote } from "../controller/controller";
+import Navbar from "../components/Navbar";
 
 export default function Transaction() {
   const [isLoading, setIsLoading] = useState(true);
@@ -12,22 +12,19 @@ export default function Transaction() {
 
   const { ticker } = useParams();
   useEffect(() => {
-console.log(ticker)
-    if(!ticker) return
+    console.log(ticker);
+    if (!ticker) return;
     async function getData() {
-      const result = await getQuote(ticker)
-      setSelectedCompany(result.response)
-      setIsLoading(false)
+      const result = await getQuote(ticker);
+      setSelectedCompany(result.response);
+      setIsLoading(false);
     }
-    getData()
+    getData();
   }, []);
 
-  useEffect(()=>{
-
-console.log(selectedCompany)
-
-  },[selectedCompany])
-
+  useEffect(() => {
+    console.log(selectedCompany);
+  }, [selectedCompany]);
 
   const navigate = useNavigate();
 
@@ -66,13 +63,10 @@ console.log(selectedCompany)
     }
   }
 
-
-
   async function handleAddButton(text) {
-
     console.log(text);
-    const result = await getQuote(text.split(" ")[0])
-      setSelectedCompany(result.response)
+    const result = await getQuote(text.split(" ")[0]);
+    setSelectedCompany(result.response);
     //Check if symbol is not null or ""
     // if (searchValue == null || searchValue == "") {
     //   return;
@@ -118,10 +112,8 @@ console.log(selectedCompany)
   // if (isLoading) return <h1>Loading . . . </h1>;
   return (
     <div>
-      <Title title="Transactions" icon="fa fa-exchange" />
-      <SearchCompanies
-        handleAddButton={handleAddButton}
-      />
+      <Navbar />
+      <SearchCompanies handleAddButton={handleAddButton} />
       {selectedCompany && (
         <>
           <div className="select-none flex items-center justify-center">

@@ -38,6 +38,21 @@ export default function Top() {
     },
   ];
 
+  useEffect(() => {
+    async function getData() {
+      const res = await checkIsLogged();
+      console.log(res.status);
+      console.log(res.response);
+      if (res.status <= 201) {
+        setIsLogged(true);
+      }else{
+        setIsLogged(false);
+
+      }
+    }
+    getData();
+  }, [location]);
+
   return (
     <div>
       <div className="grid grid-cols-[20%_auto_20%] bg-sky-900 place-items-center w-[100vw] max-w-[430px] min-h-[70px] pt-4 pb-2">
@@ -66,9 +81,8 @@ export default function Top() {
         <div className=" cursor-pointer z-10 absolute border-sky-500 border-t-2 bg-sky-100">
           {itemsMenu.map(
             (item, index) =>
-              (// isLogged &&
-              item.logged ||
-                (!isLogged && !item.logged)) && (
+              ((isLogged &&
+              item.logged) || (!isLogged && !item.logged)) && (
                 <div
                   key={index}
                   onClick={() => {

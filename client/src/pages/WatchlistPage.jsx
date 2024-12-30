@@ -6,7 +6,8 @@ import {
   removeFromWatchlist,
 } from "../controller/controller";
 import BoxWatchlist from "../components/BoxWatchlist";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 export default function WatchlistPage() {
   const [watchlist, setWatchlist] = useState([]);
@@ -17,12 +18,13 @@ export default function WatchlistPage() {
   const [filterCompanies, setFilterCompanies] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const navigate = useNavigate();
-
+  const location = useLocation();
+  console.log(location.pathname);
   useEffect(() => {
     // Retrieve user information using the localStorage
     async function getData() {
       const res = await getWatchlist();
-      console.log(res);
+      // console.log(res);
       if (res.status > 201) {
         setIsLoading(false);
         return;
@@ -32,7 +34,6 @@ export default function WatchlistPage() {
     }
     getData();
   }, []);
-
 
   useEffect(() => {
     async function getData() {
@@ -73,7 +74,6 @@ export default function WatchlistPage() {
     }
   }, [searchValue, allCompanies]);
 
-
   function handleSearchValueChange(e) {
     setSearchValue(e.target.value);
   }
@@ -83,7 +83,7 @@ export default function WatchlistPage() {
     if (searchValue == null || searchValue == "") {
       return;
     }
-   
+
     //Check if symbol is valid
     const checkValid = allCompanies.filter(
       (company) => company.ticker === ticker.split(" ")[0].toUpperCase()
@@ -103,7 +103,7 @@ export default function WatchlistPage() {
     }
 
     const result = await addToWatchlist(ticker.split(" ")[0]);
-    console.log(result)
+    // console.log(result)
     if (result.status === 200) {
       setWatchlist([
         ...watchlist,
@@ -118,7 +118,7 @@ export default function WatchlistPage() {
   }
 
   async function handleDelete(e) {
-    console.log(e);
+    // console.log(e);
     const result = await removeFromWatchlist(e);
 
     if (result.status === 200) {
@@ -128,10 +128,10 @@ export default function WatchlistPage() {
   }
 
   function handleOnClick(e) {
-    console.log(e.target.closest("li").id.split("_")[1]);
+    // console.log(e.target.closest("li").id.split("_")[1]);
     if (e.target.closest("li").id.split("_")[1] === "box") {
       const tickerDest = e.target.closest("li").id.split("_")[0];
-      navigate("/transactions/"+tickerDest);
+      navigate("/transactions/" + tickerDest);
     }
   }
 
@@ -139,12 +139,7 @@ export default function WatchlistPage() {
 
   return (
     <div>
-      <div className="flex justify-start pr-12 font-bold items-center border-solid border-sky-500 border-y-2 bg-sky-100">
-        <div className="bg-sky-900 h-8 rounded-full w-8 flex justify-center items-center m-2">
-          <span className={`fa fa-star text-white text-sm`}></span>
-        </div>
-        Watchlist
-      </div>
+<Navbar/>
       <div className="flex mt-3 m-2">
         <input
           className="border-2 grow rounded border-black p-2"
@@ -154,7 +149,7 @@ export default function WatchlistPage() {
           placeholder="type the ticker"
         ></input>
         <button
-          onClick={()=> handleAddButton(searchValue)}
+          onClick={() => handleAddButton(searchValue)}
           className="mx-2 bg-sky-900 hover:bg-sky-500 text-white font-bold py-2 px-4 rounded"
         >
           <span className="fa fa-plus-circle text-white mr-2"></span>Add
@@ -188,17 +183,12 @@ export default function WatchlistPage() {
       </ul>
       <ul className="flex flex-col">
         {watchlist.map((item, index) => (
-          <li
-            key={index}
-            id={`${item.ticker}_box`}
-            className="flex"
-          >
+          <li key={index} id={`${item.ticker}_box`} className="flex">
             <BoxWatchlist
               ticker={item.ticker}
               isEditMode={isEditMode}
               handleDelete={handleDelete}
               handleOnClick={handleOnClick}
-
             />
           </li>
         ))}

@@ -1,22 +1,15 @@
-import express from 'express';
-import {authenticateToken} from '../middlewares/authMiddleware.js';
+import express from "express";
+import { authenticateToken } from "../middlewares/authMiddleware.js";
 import * as dbController from "../controllers/dbController.js";
 import * as apiController from "../controllers/apiController.js";
 
-
 const router = express.Router();
 
-router.get("/api/islogged", authenticateToken, (req,res)=>{
-const {email} = req;
-
-res.status(200).json.apply({message: "user "+ email + "logged"})
-});
-
+router.post("/api/islogged", authenticateToken, dbController.checkIsLogged);
 
 //Database Routes
 router.post("/api/login", dbController.login);
 router.post("/api/watchlist", authenticateToken, dbController.getWatchlist);
-
 
 router.post("/api/signup", dbController.signup);
 router.post("/api/assets", authenticateToken, dbController.getAssets);
@@ -26,21 +19,13 @@ router.put(
   authenticateToken,
   dbController.addToWatchlist
 );
-router.post(
-  "/api/sellstocks",
-  authenticateToken,
-  dbController.sellStocks
-);
-router.post(
-  "/api/buystocks",
-  authenticateToken,
-  dbController.buyStocks
-);
+router.post("/api/sellstocks", authenticateToken, dbController.sellStocks);
+router.post("/api/buystocks", authenticateToken, dbController.buyStocks);
 router.delete(
-    "/api/remove_from_watchlist",
-    authenticateToken,
-    dbController.removeFromWatchlist
-  );
+  "/api/remove_from_watchlist",
+  authenticateToken,
+  dbController.removeFromWatchlist
+);
 // // router.post('/signup', userControler.signup);
 // // router.put('/updateuser', authenticateToken, userControler.updateUser);
 // // router.post('/logout', userControler.logout);
@@ -50,9 +35,7 @@ router.delete(
 router.post("/api/quote/:ticker", dbController.getStockQuote);
 // router.get("/symbols", authenticateToken, apiController.getStockSymbols);
 router.post("/api/symbols", apiController.getStockSymbols);
-router.get('/api/logout', dbController.logout);
-
-
+router.get("/api/logout", dbController.logout);
 
 // // //User Routes
 // // router.post('/login', userControler.login);
@@ -84,7 +67,7 @@ router.get('/api/logout', dbController.logout);
 // // router.post('/getenrollments/', authenticateToken, studentController.getEnrollments);
 // // router.post('/registercourse/', authenticateToken, studentController.registerCourse);
 // // router.delete('/dropcourse/', authenticateToken,  studentController.dropCourse
-    
+
 // );
 
 export default router;

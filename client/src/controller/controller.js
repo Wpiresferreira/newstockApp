@@ -33,9 +33,7 @@ export async function doLogin(email, password) {
     const req = new Request(url + "/api/signup", {
       method: "POST",
       body: JSON.stringify({ email: email, name: name, password: password, confirm_password : confirmPassword }),
-      headers: myHeaders,
-      credentials: "include", // Include cookies in the request
-    });
+      headers: myHeaders });
     try {
       return await fetch(req).then(async (res) => {
         const response = { status: res.status, response: await res.json() }
@@ -55,9 +53,10 @@ export async function checkIsLogged() {
     myHeaders.append("Accept", "*/*");
   
     const req = new Request(url + "/api/islogged", {
-      method: "GET",
+      method: "POST",
       headers: myHeaders,
-      credentials: "include", // Include cookies in the request
+      body: JSON.stringify({token: localStorage.getItem("token")})
+
     });
     try {
       return await fetch(req).then(async (res) => {

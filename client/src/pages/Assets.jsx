@@ -3,6 +3,7 @@ import { getAssets, getCash, getQuote } from "../controller/controller";
 import BoxAsset from "../components/BoxAsset";
 import BoxCash from "../components/BoxCash";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 export default function Assets() {
   const [assets, setAssets] = useState([]);
@@ -70,12 +71,7 @@ export default function Assets() {
 
   return (
     <div>
-      <div className="flex justify-start pr-12 font-bold items-center border-solid border-sky-500 border-y-2 bg-sky-100">
-        <div className="bg-sky-900 h-8 rounded-full w-8 flex justify-center items-center m-2">
-          <span className={`fa fa-pie-chart text-white text-sm`}></span>
-        </div>
-        My Assets
-      </div>
+      <Navbar/>
       <div className="flex m-2 p-2 py-4 text-xl font-bold rounded-md justify-between bg-sky-200">
         <div>Total</div>
         <div>

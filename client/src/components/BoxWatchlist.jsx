@@ -8,7 +8,6 @@ export default function BoxWatchlist({ ticker, handleDelete, handleOnClick, isEd
     // Retrieve quote
     async function getData() {
       const res = await getQuote(ticker);
-      console.log(res);
       if (res.status > 201) {
         setIsLoading(false);
         return;

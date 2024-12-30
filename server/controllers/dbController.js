@@ -74,8 +74,7 @@ export async function signup(req, res) {
 }
 
 export async function checkIsLogged(req, res) {
-  console.log("req.user" + req.user);
-  return res.status(200).json({ message: "User is logged" });
+  res.status(200).json({message: `User ${req.user.email} logged`});
 }
 
 export async function getWatchlist(req, res) {

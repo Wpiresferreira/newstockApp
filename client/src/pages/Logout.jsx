@@ -6,7 +6,8 @@ export default function Logout() {
   const navigate = useNavigate();
 
   useEffect(() => {
-      // Retrieve user information using the cookie
+
+    localStorage.clear()
       async function getData() {
         const res = await doLogout();
         if (res.status > 201) {
