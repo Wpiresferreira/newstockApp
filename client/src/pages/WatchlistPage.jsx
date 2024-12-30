@@ -8,7 +8,7 @@ import {
 import BoxWatchlist from "../components/BoxWatchlist";
 import { useNavigate } from "react-router-dom";
 
-export default function WatchlistPage({doSetQuote}) {
+export default function WatchlistPage() {
   const [watchlist, setWatchlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [allCompanies, setAllCompanies] = useState([]);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllCompanies } from "../controller/controller";
 
-export default function SearchCompanies({doSetQuote, handleAddButton}) {
+export default function SearchCompanies({handleAddButton}) {
   const [allCompanies, setAllCompanies] = useState([]);
   const [isLoadingAllCompanies, setIsLoadingAllCompanies] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -52,7 +52,6 @@ export default function SearchCompanies({doSetQuote, handleAddButton}) {
 
   function handleSelectButton(e){
 console.log(searchValue)
-    // doSetQuote()
   }
 
   return (

@@ -25,6 +25,7 @@ function App() {
           <Route path="assets" element={<Assets />} />
           <Route path="profile" element={<Profile />} />
           <Route path="transactions/:ticker" element={<Transactions />} />
+          <Route path="transactions" element={<Transactions />} />
           <Route path="logout" element={<Logout />} />
           <Route path="*" element={<NotFound />} />
           {/*<Route path="/courses/:programCode" element={<Courses />} />

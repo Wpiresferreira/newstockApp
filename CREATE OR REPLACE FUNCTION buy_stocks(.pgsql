@@ -27,13 +27,13 @@ BEGIN
         -- Check if the ticker exists in the stocks table
         IF EXISTS (
             SELECT 1 FROM stock_assets
-            WHERE ticker = value_ticker
+            WHERE ticker = value_ticker AND  email = value_email
         ) THEN 
             -- Update the existing row 
             UPDATE stock_assets
             SET qt = qt + value_qt,
                 total_cost_acquisition = total_cost_acquisition + total_cost
-            WHERE ticker = value_ticker;
+            WHERE ticker = value_ticker AND  email = value_email;
         ELSE
             -- Insert a new row
             INSERT INTO stock_assets (email, ticker, qt, total_cost_acquisition)

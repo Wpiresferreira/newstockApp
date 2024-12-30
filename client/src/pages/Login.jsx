@@ -28,7 +28,8 @@ export default function Login() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full bg-sky-50 p-3 rounded-lg border border-solid border-gray-300 mb-4 focus:shadow-lg"
-            type="text"
+            type="email"
+            required
           ></input>
         </div>
         <div className="w-full">

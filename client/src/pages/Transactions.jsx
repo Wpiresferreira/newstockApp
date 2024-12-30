@@ -5,13 +5,15 @@ import SearchCompanies from "../components/SearchCompanies";
 import Title from "../components/Title";
 import { doBuyStocks, doSellStocks, getQuote } from "../controller/controller";
 
-export default function Transaction({ quote, doSetQuote }) {
+export default function Transaction() {
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedCompany, setSelectedCompany] = useState(quote);
+  const [selectedCompany, setSelectedCompany] = useState();
   const [quantity, setQuantity] = useState(1);
 
   const { ticker } = useParams();
   useEffect(() => {
+console.log(ticker)
+    if(!ticker) return
     async function getData() {
       const result = await getQuote(ticker)
       setSelectedCompany(result.response)
@@ -113,17 +115,16 @@ console.log(selectedCompany)
     // }
   }
 
-  if (!selectedCompany) return <h1>Loading . . . </h1>;
+  // if (isLoading) return <h1>Loading . . . </h1>;
   return (
     <div>
       <Title title="Transactions" icon="fa fa-exchange" />
       <SearchCompanies
-        doSetQuote={doSetQuote}
         handleAddButton={handleAddButton}
       />
-      {(
+      {selectedCompany && (
         <>
-          <div className="flex items-center justify-center">
+          <div className="select-none flex items-center justify-center">
             <div className="rounded-lg overflow-hidden h-32 w-32 m-4 ">
               <img
                 src={selectedCompany ? selectedCompany.profile.logo : null}
