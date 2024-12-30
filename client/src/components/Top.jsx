@@ -41,12 +41,22 @@ export default function Top() {
   useEffect(() => {
     async function getData() {
       const res = await checkIsLogged();
-      console.log(res.status);
-      console.log(res.response);
       if (res.status <= 201) {
         setIsLogged(true);
+        if(location.pathname === '/home'
+          || location.pathname === '/'
+        ){
+          navigate('/assets')
+
+        }
       }else{
         setIsLogged(false);
+        if(location.pathname !== '/login' 
+          && location.pathname !== '/signup'
+          && location.pathname !== '/home'
+        ){
+          navigate('/home')
+        }
 
       }
     }

@@ -35,7 +35,7 @@ router.delete(
 router.post("/api/quote/:ticker", dbController.getStockQuote);
 // router.get("/symbols", authenticateToken, apiController.getStockSymbols);
 router.post("/api/symbols", apiController.getStockSymbols);
-router.get("/api/logout", dbController.logout);
+// router.get("/api/logout", dbController.logout);
 
 // // //User Routes
 // // router.post('/login', userControler.login);

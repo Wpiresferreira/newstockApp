@@ -12,7 +12,6 @@ export default function Transaction() {
 
   const { ticker } = useParams();
   useEffect(() => {
-    console.log(ticker);
     if (!ticker) return;
     async function getData() {
       const result = await getQuote(ticker);
@@ -22,16 +21,9 @@ export default function Transaction() {
     getData();
   }, []);
 
-  useEffect(() => {
-    console.log(selectedCompany);
-  }, [selectedCompany]);
-
   const navigate = useNavigate();
 
   async function buyStock() {
-    console.log(selectedCompany.ticker);
-    console.log(selectedCompany.quote.c);
-    console.log(quantity);
 
     const result = await doBuyStocks(
       selectedCompany.ticker,
@@ -46,10 +38,6 @@ export default function Transaction() {
     }
   }
   async function sellStock() {
-    console.log(selectedCompany.ticker);
-    console.log(selectedCompany.quote.c);
-    console.log(quantity);
-
     const result = await doSellStocks(
       selectedCompany.ticker,
       quantity,
@@ -64,7 +52,6 @@ export default function Transaction() {
   }
 
   async function handleAddButton(text) {
-    console.log(text);
     const result = await getQuote(text.split(" ")[0]);
     setSelectedCompany(result.response);
     //Check if symbol is not null or ""

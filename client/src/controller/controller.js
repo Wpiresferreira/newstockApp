@@ -131,7 +131,6 @@ export async function doSellStocks( ticker, qt, unit_price) {
       method: "POST",
       headers: myHeaders,
       body: JSON.stringify({ token: localStorage.getItem("token"), ticker: ticker, qt: qt, unit_price : unit_price}),
-      credentials: "include",
     });
   
     try {
@@ -355,14 +354,12 @@ export async function doSellStocks( ticker, qt, unit_price) {
     const req = new Request(url + "/api/logout", {
       method: "GET",
       headers: myHeaders,
-      credentials: "include",
     });
   
     // Send logout request
     try {
       const response = await fetch(url + "/logout", {
         method: "POST",
-        credentials: "include", // Include cookies in the request
       });
   
       return await response.json();

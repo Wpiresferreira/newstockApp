@@ -182,12 +182,12 @@ export async function removeFromWatchlist(req, res) {
   }
 }
 
-export async function logout(req, res) {
-  return res
-    .clearCookie("token")
-    .status(200)
-    .json({ message: "Logged out successfully" });
-}
+// export async function logout(req, res) {
+//   return res
+//     .clearCookie("token")
+//     .status(200)
+//     .json({ message: "Logged out successfully" });
+// }
 
 export async function getAssets(req, res) {
   try {

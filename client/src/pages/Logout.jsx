@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { doLogout } from "../controller/controller";
+// import { doLogout } from "../controller/controller";
 
 export default function Logout() {
   const navigate = useNavigate();
@@ -8,13 +8,13 @@ export default function Logout() {
   useEffect(() => {
 
     localStorage.clear()
-      async function getData() {
-        const res = await doLogout();
-        if (res.status > 201) {
-          return;
-        }
-      }
-      getData();
+      // async function getData() {
+      //   const res = await doLogout();
+      //   if (res.status > 201) {
+      //     return;
+      //   }
+      // }
+      // getData();
       setTimeout(() => {
         navigate('/')
       }, 1000);

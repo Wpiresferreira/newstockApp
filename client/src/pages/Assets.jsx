@@ -26,7 +26,6 @@ export default function Assets() {
       } else {
         setAssets(resAssets.response);
       }
-      console.log(assets);
       setIsLoadingAssets(false);
     }
     getData();
@@ -38,8 +37,6 @@ export default function Assets() {
       var newArray = []
       for (let i = 0; i < assets.length; i++) {
         const res = await getQuote(assets[i].ticker);
-        console.log("resQuotes");
-        console.log(res.response);
         if (res.status > 201) {
           return;
         } else {
@@ -48,8 +45,6 @@ export default function Assets() {
           newArray = ([...newArray, newAssetQuote]);
         }
       }
-      console.log("newArray")
-      console.log(newArray)
       setAssetsQuotes(newArray)
 
       setIsLoading(false);
@@ -57,10 +52,7 @@ export default function Assets() {
     updateQuotes();
   }, [isLoadingAssets]);
 
-  console.log(assets);
-
   function handleOnClick(e) {
-    console.log(e.target.closest("li").id.split("_")[1]);
     if (e.target.closest("li").id.split("_")[1] === "box") {
       const tickerDest = e.target.closest("li").id.split("_")[0];
       navigate("/transactions/" + tickerDest);
@@ -75,9 +67,6 @@ export default function Assets() {
       <div className="flex m-2 p-2 py-4 text-xl font-bold rounded-md justify-between bg-sky-200">
         <div>Total</div>
         <div>
-          {console.log(assets)}
-          {console.log("assetsQuotes")}
-          {console.log(assetsQuotes)}
           {assetsQuotes &&
             (
               assetsQuotes.reduce(

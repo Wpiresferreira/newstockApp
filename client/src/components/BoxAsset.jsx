@@ -4,7 +4,6 @@ import { getQuote } from "../controller/controller";
 export default function BoxAsset({ item, handleOnClick }) {
   const [isLoading, setIsLoading] = useState();
   useEffect(() => {
-    console.log(item);
     if (item) setIsLoading(false);
   }, [item]);
 
