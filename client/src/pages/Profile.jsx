@@ -1,197 +1,104 @@
 import { useEffect, useState } from "react";
 import {
-  addToWatchlist,
-  getAllCompanies,
-  getWatchlist,
-  removeFromWatchlist,
+  checkIsLogged,
+  updateUser,
 } from "../controller/controller";
-// import { getLoggedUser } from "../data/api";
-// import Welcome from "../components/Welcome"
-import BoxWatchlist from "../components/BoxWatchlist";
-// import Dashboard from "../components/Dashboard";
 
 export default function Profile() {
-  const [watchlist, setWatchlist] = useState([]);
+  const [userLogged, setUserLogged] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [allCompanies, setAllCompanies] = useState([]);
-  const [isLoadingAllCompanies, setIsLoadingAllCompanies] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
-  const [filterCompanies, setFilterCompanies] = useState([]);
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   useEffect(() => {
     // Retrieve user information using the cookie
     async function getData() {
-      const res = await getWatchlist();
+      const res = await checkIsLogged();
       if (res.status > 201) {
         setIsLoading(false);
         return;
       }
       setIsLoading(false);
-      setWatchlist(res.response);
+      setUserLogged(res.response);
+      setEmail(res.response.email)
+      setName(res.response.name)
     }
     getData();
   }, []);
+  
 
-  useEffect(() => {
-    // Retrieve user information using the cookie
-    async function getData() {
-      const res = await getAllCompanies();
-      if (res.status > 201) {
-        setIsLoadingAllCompanies(false);
-        return;
-      }
-      setIsLoadingAllCompanies(false);
-      setAllCompanies(res.response);
-    }
-    getData();
-  }, []);
+  function handleSubmit(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target); // Get FormData object
+    const data = Object.fromEntries(formData); // Convert to plain object
 
-  useEffect(() => {
-    console.log(searchValue);
-    if (searchValue.length === 0) {
-      setFilterCompanies([]);
-    }
-    if (searchValue.length > 0) {
-      const listSorted = allCompanies.sort((a, b) => {
-        if (a.symbol < b.symbol) {
-          return -1;
-        } else {
-          return 1;
-        }
-      });
-      const listFiltered = listSorted.filter(
-        (company) =>
-          (company.symbol + " " + company.description).substring(
-            0,
-            searchValue.length
-          ) === searchValue.toUpperCase() ||
-          company.description.substring(0, searchValue.length) ===
-            searchValue.toUpperCase()
-      );
-      setFilterCompanies(listFiltered ? listFiltered : []);
-    }
-  }, [searchValue, allCompanies]);
-
-  function handleSearchValueChange(e) {
-    setSearchValue(e.target.value);
-  }
-
-  async function handleAddButton() {
-    //Check if symbol is not null or ""
-    if (searchValue == null || searchValue == "") {
-      return;
-    }
-
-    //Check if symbol is valid
-    const checkValid = allCompanies.filter(
-      (company) => company.symbol === searchValue.split(" ")[0].toUpperCase()
-    );
-    if (!checkValid[0]) {
-      alert("Ticker Invalid");
-      return;
-    }
-    //Check if symbol is already on Watchlist
-    const checkAlreadyInWatchlist = watchlist.filter(
-      (company) => company.ticker === searchValue.split(" ")[0].toUpperCase()
-    );
-    if (checkAlreadyInWatchlist[0]) {
-      alert("Ticker Is Already Listed");
-      setSearchValue("");
-      return;
-    }
-
-    const result = await addToWatchlist(searchValue.split(" ")[0]);
-
-    if (result.status === 200) {
-      setWatchlist([
-        ...watchlist,
-        { ticker: searchValue.split(" ")[0].toUpperCase() },
-      ]);
-      setSearchValue("");
-    }
-  }
-
-  function handleEditButton() {
-    setIsEditMode(!isEditMode);
-  }
-
-  async function handleDelete(e) {
-    console.log(e);
-    const result = await removeFromWatchlist(e);
-
-    if (result.status === 200) {
-      const removed = watchlist.filter((company) => company.ticker !== e);
-      setWatchlist(removed);
-    }
+    console.log(data); // Log the object
+    updateUser(data)
+    // e.target.forEach(item => {
+    //   user = 
+    // });
   }
 
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div>
-      <div className="flex justify-start pr-12 font-bold items-center border-solid border-sky-500 border-y-2 bg-sky-100">
-        <div className="bg-sky-900 h-8 rounded-full w-8 flex justify-center items-center m-2">
-          <span className={`fa fa-star text-white text-sm`}></span>
+    <div className="flex justify-center items-center min-h-[70vh] h-full">
+      <form
+        onSubmit={handleSubmit}
+        className="mx-4 flex items-center flex-col p-5 bg-sky-100 shadow-lg rounded-xl w-[90vw] border border-solid border-gray-300"
+      >
+        <h1 className="my-4 text-lg font-bold">Profile</h1>
+        <div className="w-full">
+          <label className="w-full block text-left">Email</label>
+          <input
+            value={email}
+            name="email"
+            onChange={(e) => setEmail(e.target.value)}
+            className="select-none w-full bg-sky-50 p-3 rounded-lg border border-solid border-gray-300 mb-4 focus:shadow-lg"
+            type="text"
+            disabled
+          ></input>
         </div>
-        Watchlist
-      </div>
-      <div className="flex mt-3 m-2">
-        <input
-          className="border-2 grow rounded border-black p-2"
-          type="text"
-          value={searchValue}
-          onChange={handleSearchValueChange}
-          placeholder="type the ticker"
-        ></input>
-        <button
-          onClick={handleAddButton}
-          className="mx-2 bg-sky-900 hover:bg-sky-500 text-white font-bold py-2 px-4 rounded"
-        >
-          <span className="fa fa-plus-circle text-white mr-2"></span>Add
-        </button>
-        <button
-          onClick={handleEditButton}
-          className="mx-2 bg-amber-600 hover:bg-amber-400 text-white font-bold py-2 px-4 rounded"
-        >
-          <span
-            className={`fa ${
-              isEditMode ? "fa-check text-green-500" : "fa-edit text-white"
-            } `}
-          ></span>
-          {/* {isEditMode ? " OK " : " Edit "} */}
-        </button>
-      </div>
-      <ul className="absolute">
-        {filterCompanies.map((company, index) => (
-          <li
-            key={index}
-            className={`text-left ${
-              index % 2 === 0 ? " bg-sky-50 " : "bg-white"
-            } hover:font-bold `}
-            onClick={(e) => setSearchValue(e.target.innerText)}
-          >
-            {company.symbol + " " + company.description}
-          </li>
-        ))}
-      </ul>
-      <div className="flex flex-col">
-        {watchlist.map((item, index) => (
-          <div key={index} className="flex">
-            <BoxWatchlist ticker={item.ticker} />
-            
-          </div>
-        ))}
-        {/* <div className="fa fa-bar-chart" />
-        <div className="fa fa-user-o" />
+        <div className="w-full">
+          <label className="w-full block text-left">Name</label>
+          <input
+            value={name}
+            name="name"
+            onChange={(e) => setName(e.target.value)}
+            className="w-full bg-sky-50 p-3 rounded-lg border border-solid border-gray-300 mb-4 focus:shadow-lg"
+            type="text"
+          ></input>
+        </div>
+        <div className="w-full">
+          <label className="w-full block text-left">Password</label>
+          <input
+            value={password}
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full bg-sky-50 p-3 rounded-lg border border-solid border-gray-300 mb-4 focus:shadow-lg"
+            type="password"
+          ></input>
+        </div>
+        <div className="w-full">
+          <label className="w-full block text-left">Confirm Password</label>
+          <input
+            value={confirmPassword}
+            name="confirmPassword"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="w-full bg-sky-50 p-3 rounded-lg border border-solid border-gray-300 mb-4 focus:shadow-lg"
+            type="password"
+          ></input>
+        </div>
         <div>
-          <span className="fa fa-long-arrow-up" />
-          <span className="fa fa-long-arrow-down" />
+          <button
+            type="submit"
+            className={`text-sm text-white rounded-xl px-4 py-1 m-3 bg-sky-900 border-solid border-2 border-sky-900 hover:text-black hover:bg-sky-50 focus:shadow-lg`}
+          >
+            Update
+          </button>
         </div>
-        <div className="fa fa-industry" />
-        <div className="fa fa-pie-chart" />
-        <div className="fa fa-usd" /> */}
-        {/* {loggedUser ? <Dashboard loggedUser={loggedUser}/> : <Welcome />} */}
-      </div>
+      </form>
     </div>
   );
 }

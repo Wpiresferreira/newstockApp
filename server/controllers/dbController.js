@@ -74,7 +74,25 @@ export async function signup(req, res) {
 }
 
 export async function checkIsLogged(req, res) {
-  res.status(200).json({message: `User ${req.user.email} logged`});
+  // res.status(200).json({response : req.user});
+
+  try {
+    const findUser = await sql`
+      SELECT email, name
+      FROM stock_users
+      WHERE email = ${req.user.email}
+      `;
+    // console.log(findUser)
+
+    res.status(200).json(findUser.rows[0]);
+    // if (findUser.rows[0]) {
+    // } else {
+    //   res.status(404).json({ message: "Invalid Session" });
+    // }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Invalid Session" });
+  }
 }
 
 export async function getWatchlist(req, res) {
@@ -197,7 +215,6 @@ export async function getAssets(req, res) {
         WHERE email = ${req.user.email}
         `;
 
-
     if (findUser.rows[0]) {
       res.status(200).json(findUser.rows);
     } else {
@@ -227,20 +244,55 @@ export async function getCash(req, res) {
   }
 }
 export async function getStockQuote(req, res) {
-  console.log("getStockQuote called")
-  try{
-
-    const ticker = req.params.ticker.toUpperCase()
-    console.log(ticker)
+  console.log("getStockQuote called");
+  try {
+    const ticker = req.params.ticker.toUpperCase();
+    console.log(ticker);
     const apiUrl = `http://142.59.11.227:5123/getquote/?token=${quotesApiKey}&ticker=${ticker}`;
     const data = await fetch(apiUrl);
     const companies = await data.json();
-    console.log(companies)
+    console.log(companies);
     res.status(200).json(companies);
-  }catch(e){
-    console.log(e)
-    res.status(500).json({message: "Error getting quotes"});
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ message: "Error getting quotes" });
+  }
+}
 
+export async function updateUser(req, res) {
+  const { email } = req.user;
+  const { name, password, confirm_password } = req.body;
+
+  //check if password and confirm_password are the same
+  if (password !== confirm_password) {
+    res
+      .status(500)
+      .json({ message: "Password and Confirm Password doesn't match" });
+    return;
+  }
+
+  try {
+    //if no password, update only name
+    if (password == "") {
+      const resultUpdate = await sql`
+      UPDATE stock_users
+      SET name = ${name}
+      WHERE email = ${email}
+      `;
+      res.status(200).json(resultUpdate);
+    } else {
+      const hashedPassword = bcrypt.hashSync(password, 10);
+      const resultUpdate = await sql`
+      UPDATE stock_users
+      SET name = ${name},
+      password = ${hashedPassword}
+      WHERE email = ${email}
+      `;
+      res.status(200).json(resultUpdate);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Invalid Session" });
   }
 }
 

@@ -12,6 +12,7 @@ router.post("/api/login", dbController.login);
 router.post("/api/watchlist", authenticateToken, dbController.getWatchlist);
 
 router.post("/api/signup", dbController.signup);
+router.post("/api/update_user", authenticateToken, dbController.updateUser);
 router.post("/api/assets", authenticateToken, dbController.getAssets);
 router.post("/api/cash", authenticateToken, dbController.getCash);
 router.put(

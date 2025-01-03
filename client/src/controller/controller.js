@@ -47,6 +47,29 @@ export async function doLogin(email, password) {
   }
 
 
+  export async function updateUser(data) {
+    const {email, name, password, confirmPassword} = data
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Accept", "*/*");
+  
+    const req = new Request(url + "/api/update_user", {
+      method: "POST",
+      body: JSON.stringify({ token : localStorage.getItem("token"), email: email, name: name, password: password, confirm_password : confirmPassword }),
+      headers: myHeaders });
+    try {
+      return await fetch(req).then(async (res) => {
+        const response = { status: res.status, response: await res.json() }
+        console.log(response)
+        return response;
+      });
+    } catch (e) {
+      console.error(e);
+      return { status: 500, response: { message: "Check connection" } };
+    }
+  }
+
+
 export async function checkIsLogged() {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
