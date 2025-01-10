@@ -19,6 +19,18 @@ export async function getStockSymbols(req, res) {
   }
 }
 
+export async function getMarketNews(req, res) {
+
+  try{
+    const apiUrl = `http://142.59.11.227:5123/market-news/?token=${quotesApiKey}`;
+    const data = await fetch(apiUrl);
+    const posts = await data.json();
+    res.status(200).json(posts);
+  }catch(e){
+    console.log(e)
+    res.status(500).json({message: "Error getting market news."})
+  }
+}
 async function refreshStockQuote(symbol) {
   // const symbol = req.params.symbol.toUpperCase();
   // console.log(symbol)

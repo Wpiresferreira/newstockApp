@@ -34,9 +34,10 @@ router.delete(
 //API Routes
 // router.get("/api/profile/:symbol", authenticateToken, apiController.getStockProfile);
 router.post("/api/quote/:ticker", dbController.getStockQuote);
-// router.get("/symbols", authenticateToken, apiController.getStockSymbols);
 router.post("/api/symbols", apiController.getStockSymbols);
+router.post("/api/market-news", authenticateToken, apiController.getMarketNews);
 // router.get("/api/logout", dbController.logout);
+// router.get("/symbols", authenticateToken, apiController.getStockSymbols);
 
 // // //User Routes
 // // router.post('/login', userControler.login);
