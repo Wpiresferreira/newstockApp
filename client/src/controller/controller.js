@@ -1,6 +1,6 @@
 //const url = "http://142.59.11.227:5000"
-const url = ""
-// const url = "http://localhost:5000"
+// const url = ""
+const url = "http://localhost:5000"
 
 export async function doLogin(email, password) {
     const myHeaders = new Headers();
@@ -97,6 +97,36 @@ export async function getWatchlist() {
     myHeaders.append("Accept", "*/*");
   
     const req = new Request(url + "/api/watchlist", {
+      method: "POST",
+      headers: myHeaders,
+      body: JSON.stringify({token: localStorage.getItem("token")})
+    });
+  
+    try {
+      console.log(req)
+      return await fetch(req).then(async (res) => {
+        if (res.status === 204) {
+          return {
+            status: res.status,
+            response: { message: "No Authenticated" },
+          };
+        }
+        return { status: res.status, response: await res.json() };
+      });
+    } catch (e) {
+      console.log(e);
+      return { status: 500, response: { message: "Check connection" } };
+    }
+  }
+
+
+
+  export async function getMarketNews() {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Accept", "*/*");
+  
+    const req = new Request(url + "/api/market-news", {
       method: "POST",
       headers: myHeaders,
       body: JSON.stringify({token: localStorage.getItem("token")})

@@ -16,6 +16,12 @@ export default function Navbar() {
       logged: true,
     },
     {
+      label: "News",
+      icon: "fa-newspaper-o",
+      href: "/news",
+      logged: true,
+    },
+    {
       label: "My Profile",
       icon: "fa-user-o",
       href: "/profile",
