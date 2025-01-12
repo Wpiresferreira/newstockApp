@@ -4,6 +4,8 @@ import generateToken from "../utils/generateToken.js"; // Function to generate J
 import { getStockSymbols } from "./apiController.js";
 // import {companies} from './apiController.js'
 const quotesApiKey = process.env.QUOTES_API_KEY;
+const quotesApiServer = process.env.QUOTES_API_SERVER;
+
 
 export async function login(req, res) {
   const { email, password } = req.body;
