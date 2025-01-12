@@ -1,6 +1,10 @@
-//const url = "http://142.59.11.227:5000"
-const url = ""
-// const url = "http://localhost:5000"
+import 'dotenv/config'
+
+if(process.env.ENVIRONMENT==development){
+   const url = "http://localhost:5000"
+}else{
+  const url = ""
+}
 
 export async function doLogin(email, password) {
     const myHeaders = new Headers();

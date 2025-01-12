@@ -12,6 +12,7 @@
   "dependencies": {
     "@vue/cli-service": "^5.0.8",
     "cra-template": "1.2.0",
+    "dotenv": "^16.4.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-fast-marquee": "^1.6.5",
