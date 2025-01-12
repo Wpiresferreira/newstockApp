@@ -2,6 +2,7 @@ import "dotenv/config";
 
 const apiKey = process.env.API_KEY;
 const quotesApiKey = process.env.QUOTES_API_KEY;
+const quotesApiServer = process.env.QUOTES_API_SERVER;
 
 
 export async function getStockSymbols(req, res) {
@@ -9,7 +10,7 @@ export async function getStockSymbols(req, res) {
   try{
 
 
-    const apiUrl = `http://142.59.11.227:5123/symbols/?token=${quotesApiKey}`;
+    const apiUrl = `${quotesApiServer}/symbols/?token=${quotesApiKey}`;
     const data = await fetch(apiUrl);
     const posts = await data.json();
     res.status(200).json(posts);
@@ -22,7 +23,7 @@ export async function getStockSymbols(req, res) {
 export async function getMarketNews(req, res) {
 
   try{
-    const apiUrl = `http://142.59.11.227:5123/market-news/?token=${quotesApiKey}`;
+    const apiUrl = `${quotesApiServer}/market-news/?token=${quotesApiKey}`;
     const data = await fetch(apiUrl);
     const posts = await data.json();
     res.status(200).json(posts);

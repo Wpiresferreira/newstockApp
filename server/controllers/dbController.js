@@ -248,7 +248,7 @@ export async function getStockQuote(req, res) {
   try {
     const ticker = req.params.ticker.toUpperCase();
     console.log(ticker);
-    const apiUrl = `http://142.59.11.227:5123/getquote/?token=${quotesApiKey}&ticker=${ticker}`;
+    const apiUrl = `${quotesApiServer}/getquote/?token=${quotesApiKey}&ticker=${ticker}`;
     const data = await fetch(apiUrl);
     const companies = await data.json();
     console.log(companies);
