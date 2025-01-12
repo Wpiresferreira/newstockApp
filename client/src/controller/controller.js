@@ -1,9 +1,9 @@
-import 'dotenv/config'
 
-if(process.env.ENVIRONMENT==development){
-   const url = "http://localhost:5000"
+var url
+if(import.meta.env.VITE_ENVIRONMENT=="development"){
+  url = "http://localhost:5000"
 }else{
-  const url = ""
+  url = ""
 }
 
 export async function doLogin(email, password) {

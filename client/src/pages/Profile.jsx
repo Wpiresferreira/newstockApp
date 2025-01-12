@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { checkIsLogged, updateUser } from "../controller/controller";
 import Navbar from "../components/Navbar";
+import { useOutletContext } from "react-router-dom";
 
 export default function Profile() {
   const [userLogged, setUserLogged] = useState([]);
@@ -9,6 +10,7 @@ export default function Profile() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const { setShowAlert, setTypeAlert, setMessageAlert } = useOutletContext();
   useEffect(() => {
     // Retrieve user information using the cookie
     async function getData() {
@@ -25,16 +27,20 @@ export default function Profile() {
     getData();
   }, []);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData(e.target); // Get FormData object
     const data = Object.fromEntries(formData); // Convert to plain object
-
-    console.log(data); // Log the object
-    updateUser(data);
-    // e.target.forEach(item => {
-    //   user =
-    // });
+    const result = await updateUser(data);
+    if (result.status == 200) {
+      setTypeAlert("sucess");
+    } else {
+      setTypeAlert("alert");
+    }
+    setShowAlert(true);
+    setMessageAlert(result.response.message);
+    setPassword("")
+    setConfirmPassword("")
   }
 
   if (isLoading) return <div>Loading...</div>;

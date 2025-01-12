@@ -1,20 +1,30 @@
 import { useState } from "react";
 import { doLogin } from "../controller/controller";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setShowAlert, setTypeAlert, setMessageAlert } = useOutletContext();
 
   async function handleSubmit(e) {
     e.preventDefault();
     const result = await doLogin(email, password);
-    console.log(await result)
+    console.log(await result);
     setPassword("");
-    if (result.status==200) {
-      localStorage.setItem("token",result.response.token)
+    if (result.status == 200) {
+      localStorage.setItem("token", result.response.token);
+
+      setShowAlert(true);
+      setTypeAlert("sucess");
+      setMessageAlert(result.response.message);
+
       navigate("/watchlist");
+    }else{
+      setShowAlert(true);
+      setTypeAlert("alert");
+      setMessageAlert(result.response.message);
     }
   }
 

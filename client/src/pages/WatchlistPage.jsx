@@ -139,7 +139,7 @@ export default function WatchlistPage() {
 
   return (
     <div>
-<Navbar/>
+      <Navbar />
       <div className="flex mt-3 m-2">
         <input
           className="border-2 grow rounded border-black p-2"

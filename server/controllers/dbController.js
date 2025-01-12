@@ -281,7 +281,7 @@ export async function updateUser(req, res) {
       SET name = ${name}
       WHERE email = ${email}
       `;
-      res.status(200).json(resultUpdate);
+      res.status(200).json({ message: "User updated sucessfully" } );
     } else {
       const hashedPassword = bcrypt.hashSync(password, 10);
       const resultUpdate = await sql`
@@ -290,7 +290,7 @@ export async function updateUser(req, res) {
       password = ${hashedPassword}
       WHERE email = ${email}
       `;
-      res.status(200).json(resultUpdate);
+      res.status(200).json({ message: "User updated sucessfully" } );
     }
   } catch (error) {
     console.error(error);

@@ -7,49 +7,27 @@ import Background from "../assets/background.png";
 import { useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import MiniBox from "../components/MiniBox";
-// import Interval from "react-interval-rerender";
-// import Marquee from "../components/Marquee";
+import { useOutletContext } from "react-router-dom";
 
 export default function Home() {
+
   const navigate = useNavigate();
-
-  // const [loggedUser, setLoggedUser] = useState(null);
-  // const [isLoading, setIsLoading] = useState(true);
-
-  // useEffect(() => {
-  //   // Retrieve user information using the cookie
-  //   async function getData() {
-  //     const res = await getLoggedUser();
-  //     if(res.status>201) {
-  //       setIsLoading(false);
-  //       return
-  //     }
-  //     setIsLoading(false);
-  //     setLoggedUser(res.response);
-  //   }
-  //   getData();
-  // }, []);
-
-  // if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="flex flex-col">
-      {/* <Interval delay={1000}> */}
-        {/* {() => ( */}
-          <Marquee className="bg-black text-white">
-              <MiniBox ticker={"AAPL"} />
-              <MiniBox ticker={"MSFT"} />
-              <MiniBox ticker={"GOOG"} />
-              <MiniBox ticker={"TSLA"} />
-          </Marquee>
-        {/* )} */}
-      {/* </Interval> */}
+      <Marquee className="bg-black text-white">
+        <MiniBox ticker={"AAPL"} />
+        <MiniBox ticker={"MSFT"} />
+        <MiniBox ticker={"GOOG"} />
+        <MiniBox ticker={"TSLA"} />
+      </Marquee>
       <div
         className={`bg-[url('/background.png')] bg-cover h-[80vh]  bg-center m-3 rounded border-2 border-solid border-sky-500 p-5`}
       >
         <h1 className="font-bold text-white bg-opacity-80 bg-sky-800 rounded-2xl p-2 my-5">
           Stock Simulator
         </h1>
+        
         <div className="flex flex-col text-white font-bold text-right italic ">
           <div className="bg-sky-800 bg-opacity-80 rounded-xl p-2 w-[60%] self-end m-2">
             Try buy and sell over <br></br>27,400 US Stocks, ADRs, <br></br>ETFs

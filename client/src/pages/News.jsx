@@ -11,7 +11,7 @@ export default function News() {
   useEffect(() => {
     async function getData() {
       const marketNews = await getMarketNews();
-      const recentNewsSorted = marketNews.response.sort((a, b) => b.id - a.id);
+      const recentNewsSorted = marketNews.response.sort((a, b) => b.datetime - a.datetime);
       const mostRecentNews = recentNewsSorted;
       setNews(mostRecentNews);
       setIsLoading(false);
@@ -36,8 +36,8 @@ export default function News() {
               } hover:font-bold m-2`}
             ><a href={news.url}>
 
-              {new Date(news.datetime).toLocaleTimeString() +
-                " " +
+              {new Date(news.datetime*1000).toLocaleTimeString().toLowerCase() +
+                " - " +
                 news.headline}
                 </a>
             </li>
