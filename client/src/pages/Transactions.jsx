@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
 import SearchCompanies from "../components/SearchCompanies";
 import { doBuyStocks, doSellStocks, getQuote } from "../controller/controller";
@@ -9,6 +9,7 @@ export default function Transaction() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCompany, setSelectedCompany] = useState();
   const [quantity, setQuantity] = useState(1);
+  const { setShowAlert, setTypeAlert, setMessageAlert } = useOutletContext();
 
   const { ticker } = useParams();
   useEffect(() => {
@@ -30,12 +31,16 @@ export default function Transaction() {
       quantity,
       selectedCompany.quote.c
     );
+
+
     if (result.status == 200) {
-      alert("Transaction completed!");
-      navigate("/assets");
+      setTypeAlert("sucess");
     } else {
-      alert("Transaction not completed. Check your balance!");
+      setTypeAlert("alert");
     }
+    setShowAlert(true);
+    setMessageAlert(result.response.message);
+    
   }
   async function sellStock() {
     const result = await doSellStocks(
@@ -44,11 +49,12 @@ export default function Transaction() {
       selectedCompany.quote.c
     );
     if (result.status == 200) {
-      alert("Transaction completed!");
-      navigate("/assets");
+      setTypeAlert("sucess");
     } else {
-      alert("Transaction not completed. Check your balance!");
+      setTypeAlert("alert");
     }
+    setShowAlert(true);
+    setMessageAlert(result.response.message);
   }
 
   async function handleAddButton(text) {
@@ -198,6 +204,16 @@ export default function Transaction() {
             </button>
           </div>
         </>
+      )}
+            {!selectedCompany && (
+        <ul className="text-left m-8 list-disc text-sky-900">
+          <li>Select one company to see their details by typing the ticker on the search bar.
+          </li>
+          <li>
+            You have access to 50 biggest US companies + 5 biggest Brazilian
+            ADRs
+          </li>
+        </ul>
       )}
     </div>
   );

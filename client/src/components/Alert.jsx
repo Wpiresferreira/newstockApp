@@ -17,7 +17,7 @@ export default function Alert({ typeAlert, messageAlert, showAlert, setShowAlert
       setIdTimeout(
         setTimeout(() => {
           setShowAlert(false);
-        }, 2000)
+        }, 4000)
       );
     } else {
       setAnimateValue(" animate-[fadeOut_1s_ease-in-out] opacity-0 ");
@@ -38,7 +38,7 @@ export default function Alert({ typeAlert, messageAlert, showAlert, setShowAlert
         bg: "bg-green-200"
        })
     }
-  }, [showAlert]);
+  }, [showAlert, typeAlert, messageAlert]);
 
   function handleClose() {
     setShowAlert(false);

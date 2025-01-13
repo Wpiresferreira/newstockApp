@@ -29,6 +29,28 @@ export async function doLogin(email, password) {
     }
   }
 
+
+  export async function doGuestLogin() {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Accept", "*/*");
+  
+    const req = new Request(url + "/api/login-guest", {
+      method: "GET",
+      headers: myHeaders
+    });
+    try {
+      return await fetch(req).then(async (res) => {
+        const response = { status: res.status, response: await res.json() }
+        return response;
+      });
+    } catch (e) {
+      console.error(e);
+      return { status: 500, response: { message: "Check connection" } };
+    }
+  }
+
+
   export async function doSignup(email, name, password, confirmPassword) {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");

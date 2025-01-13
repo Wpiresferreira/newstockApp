@@ -1,17 +1,30 @@
-// import { useEffect, useState } from "react";
-// import { getLoggedUser } from "../data/api";
-// import Welcome from "../components/Welcome"
-// import Dashboard from "../components/Dashboard";
-import Background from "../assets/background.png";
-
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import MiniBox from "../components/MiniBox";
-import { useOutletContext } from "react-router-dom";
+import { doGuestLogin } from "../controller/controller";
 
 export default function Home() {
-
+  const { setShowAlert, setTypeAlert, setMessageAlert } = useOutletContext();
   const navigate = useNavigate();
+
+  async function guestLogin(){
+    const result = await doGuestLogin()
+    if (result.status == 200) {
+      localStorage.setItem("token", result.response.token);
+
+      setShowAlert(true);
+      setTypeAlert("sucess");
+      setMessageAlert(result.response.message);
+
+      setTimeout(() => {
+        navigate("/assets");
+      }, 1000);
+    }else{
+      setShowAlert(true);
+      setTypeAlert("alert");
+      setMessageAlert(result.response.message);
+    }
+  }
 
   return (
     <div className="flex flex-col">
@@ -49,6 +62,10 @@ export default function Home() {
         >
           Signup
         </button>
+      <button
+      className="m-2 bg-blue-900 hover:bg-white text-white hover:text-sky-900 font-bold py-2 px-4 rounded hover:boder-2 hover:border-solid hover:border-sky-900  "
+      onClick={guestLogin}
+      > Try as a Guest </button>
       </div>
       <br></br>
       <br></br>

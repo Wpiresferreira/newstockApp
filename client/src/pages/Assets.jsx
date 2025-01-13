@@ -34,18 +34,18 @@ export default function Assets() {
   useEffect(() => {
     if (isLoadingAssets) return;
     async function updateQuotes() {
-      var newArray = []
+      var newArray = [];
       for (let i = 0; i < assets.length; i++) {
         const res = await getQuote(assets[i].ticker);
         if (res.status > 201) {
           return;
         } else {
-          const newAssetQuote = assets[i]
+          const newAssetQuote = assets[i];
           newAssetQuote.quote = res.response;
-          newArray = ([...newArray, newAssetQuote]);
+          newArray = [...newArray, newAssetQuote];
         }
       }
-      setAssetsQuotes(newArray)
+      setAssetsQuotes(newArray);
 
       setIsLoading(false);
     }
@@ -63,7 +63,7 @@ export default function Assets() {
 
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <div className="flex m-2 p-2 py-4 text-xl font-bold rounded-md justify-between bg-sky-200">
         <div>Total</div>
         <div>
@@ -82,14 +82,30 @@ export default function Assets() {
       <div className="flex flex-col">
         <BoxCash item={cash} />
         {assetsQuotes &&
-          assetsQuotes.map((asset, index) => (
-
-            asset.qt >0 &&
-            <li key={index} id={`${asset.ticker}_box`} className="flex">
-              <BoxAsset item={asset} handleOnClick={handleOnClick} />
-            </li>
-          ))}
+          assetsQuotes.map(
+            (asset, index) =>
+              asset.qt > 0 && (
+                <li key={index} id={`${asset.ticker}_box`} className="flex">
+                  <BoxAsset item={asset} handleOnClick={handleOnClick} />
+                </li>
+              )
+          )}
       </div>
+      {assetsQuotes.length == 0 && (
+        <ul className="text-left m-8 list-disc text-sky-900">
+          <li>Your balance and your Stocks are <b>ficticius</b>, and just for training purposes.</li>
+          <li>
+            You can simulate buy and sell stocks acessing the <a className ="underline text-blue-500 font-bold" onClick={() => navigate('/transactions')}>Transactions</a> page.
+          </li>
+          <li>
+            You have access to 50 biggest US companies + 5 biggest Brazilian
+            ADRs
+          </li>
+          <li className="font-bold">
+            Enjoy the App and have fun !
+          </li>
+        </ul>
+      )}
     </div>
   );
 }

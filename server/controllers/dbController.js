@@ -43,11 +43,36 @@ export async function login(req, res) {
     res.status(500).send({ message: "Error. Try again later" });
   }
 }
+export async function loginGuest(req, res) {
+  
+  try {
+    const query = await sql`
+      SELECT count(email) FROM stock_users;`;
+
+    const username  = `GuestUser00${query.rows[0].count}`
+
+    const user = await sql`
+      INSERT INTO stock_users (email, name, password)
+      VALUES (${username}, ${username}, ${999})
+      `;
+
+    // Generate JWT token for the authenticated user
+       const token = generateToken({email: username});
+       // Set the token in a cookie with httpOnly option for security
+       // console.log(process.env.NODE_ENV === 'production')
+       return res
+         .status(200)
+         .json({ message: "Logged in successfully", token: token });
+    // }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Error. Try again later" });
+  }
+}
 
 export async function signup(req, res) {
   const { email, name, password } = req.body;
 
-  //delete before publish
   if (!email) {
     return res.status(401).json({ message: "Please, insert your username!" });
   }
@@ -67,8 +92,8 @@ export async function signup(req, res) {
     if (user.rowCount == 0) {
       return res.status(404).json({ message: "Invalid User." });
     }
-
-    return res.status(200).json({ message: "Signup successfully" });
+    const token = generateToken({email: email});
+    return res.status(200).json({ message: "Signup successfully", token: token });
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Error. Try again later" });
@@ -166,18 +191,22 @@ export async function sellStocks(req, res) {
   console.log(qt);
   console.log(unit_price);
   try {
-    const insertUser = await sql`
-SELECT sell_stocks(${email}, ${ticker}, ${qt}, ${unit_price}) as transaction_success;
+    const resultTransaction = await sql`
+      SELECT sell_stocks(${email}, ${ticker}, ${qt}, ${unit_price}) as transaction_success;
         `;
-    console.log(insertUser);
-    // if (insertUser.rowCount == 1) {
-    res.status(200).json({ message: `SELL sucessfully!` });
-    // } else {
-    //   res.status(404).json({ message: "Invalid Session" });
-    // }
+
+        console.log(resultTransaction)
+    if(resultTransaction.rows[0].transaction_success){
+
+      // if (insertUser.rowCount == 1) {
+        res.status(200).json({ message: ` ${qt} ${ticker} sold sucessfully!` });
+      
+    } else {
+      res.status(404).json({ message: "Insufficient quantity of stocks to sell" });
+    }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Invalid Session" });
+    res.status(500).json({ message: "Server Error. Contact Support" });
   }
 }
 

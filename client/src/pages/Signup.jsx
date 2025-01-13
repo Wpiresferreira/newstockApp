@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { doSignup } from "../controller/controller";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 // import Alert from "../components/Alert";
 
 export default function Signup() {
@@ -9,27 +9,31 @@ export default function Signup() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  // const [alertMessage, setAlertMessage] = useState("");
-  // const [typeAlert, setTypeAlert] = useState("");
-  // const [showMessage, setShowMessage] = useState(false);
+  const { setShowAlert, setTypeAlert, setMessageAlert } = useOutletContext();
 
   async function handleSubmit(e) {
     e.preventDefault();
     const result = await doSignup(email, name, password, confirmPassword);
-    if (result.status) {
-      setPassword("");
-      // setAlertMessage(result.response.message);
-      if (result.status < 300) {
-        // setTypeAlert("sucess");
-        setTimeout(() => {
-          navigate("/login");
-        }, 1000);
-      } else {
-        // setTypeAlert("alert");
-      }
-      // setShowMessage(true);
+    if (result.status == 200) {
+      localStorage.setItem("token", result.response.token);
+
+      setShowAlert(true);
+      setTypeAlert("sucess");
+      setMessageAlert(result.response.message);
+
+      setTimeout(() => {
+        navigate("/assets");
+      }, 1000);
+    } else {
+      setShowAlert(true);
+      setTypeAlert("alert");
+      setMessageAlert(result.response.message);
     }
+    setPassword("");
+    setConfirmPassword("");
   }
+
+
   // function hideMessage(){
   //   setShowMessage(false);
   // };
@@ -37,8 +41,9 @@ export default function Signup() {
   return (
     <div className="flex justify-center items-center min-h-[70vh] h-full">
       <form
-      onSubmit={handleSubmit}
-      className="mx-4 flex items-center flex-col p-5 bg-sky-100 shadow-lg rounded-xl w-[90vw] border border-solid border-gray-300">
+        onSubmit={handleSubmit}
+        className="mx-4 flex items-center flex-col p-5 bg-sky-100 shadow-lg rounded-xl w-[90vw] border border-solid border-gray-300"
+      >
         <h1 className="my-4 text-lg font-bold">Signup</h1>
         <div className="w-full">
           <label className="w-full block text-left">Email</label>

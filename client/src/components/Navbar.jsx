@@ -38,7 +38,7 @@ export default function Navbar() {
   return (
     <div className="flex pr-2 justify-between	font-bold border-solid border-sky-500 border-y-2 bg-sky-100">
       {itemsMenu.map((item) =>
-        item.href === location.pathname ? (
+        location.pathname.startsWith(item.href) ? (
           <div key={item.label} className="flex items-center">
             <div className="inline bg-sky-900 h-8 rounded-full w-8 flex justify-center items-center m-2">
               <div className={`fa ${item.icon} text-white text-sm`}></div>
@@ -49,14 +49,14 @@ export default function Navbar() {
       )}
       <div className="flex">
         {itemsMenu.map((item) =>
-          item.href !== location.pathname && item.logged ? (
+          !location.pathname.startsWith(item.href) && item.logged ? (
             <div
               key={item.label}
               title={item.label}
               className="flex items-center hover:cursor-pointer"
               onClick={()=> navigate(item.href)}
             >
-              <div className="inline bg-white h-8 rounded-full w-8 flex justify-center items-center m-2">
+              <div className="inline bg-white h-8 rounded-full border-solid border-[1px] border-sky-700 w-8 flex justify-center items-center m-2">
                 <div className={`fa ${item.icon} text-sky-900 text-sm`}></div>
               </div>
             </div>

@@ -9,6 +9,7 @@ router.post("/api/islogged", authenticateToken, dbController.checkIsLogged);
 
 //Database Routes
 router.post("/api/login", dbController.login);
+router.get("/api/login-guest", dbController.loginGuest);
 router.post("/api/watchlist", authenticateToken, dbController.getWatchlist);
 
 router.post("/api/signup", dbController.signup);

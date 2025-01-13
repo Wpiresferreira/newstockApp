@@ -22,7 +22,7 @@ export default function BoxCash({ item }) {
       >
         
         <div className="flex flex-col items-end">
-          <div className="font-bold">
+          <div className="font-bold mr-2">
             ${(Number(item.amount)).toLocaleString("en-CA", {minimumFractionDigits: 2, maximumFractionDigits:2})}
           </div>
         </div>

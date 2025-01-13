@@ -154,17 +154,18 @@ export default function WatchlistPage() {
         >
           <span className="fa fa-plus-circle text-white mr-2"></span>Add
         </button>
-        <button
-          onClick={handleEditButton}
-          className="mx-2 bg-amber-600 hover:bg-amber-400 text-white font-bold py-2 px-4 rounded"
-        >
-          <span
-            className={`fa ${
-              isEditMode ? "fa-check text-green-500" : "fa-edit text-white"
-            } `}
-          ></span>
-          {/* {isEditMode ? " OK " : " Edit "} */}
-        </button>
+        {watchlist.length !== 0 && (
+          <button
+            onClick={handleEditButton}
+            className="mx-2 bg-amber-600 hover:bg-amber-400 text-white font-bold py-2 px-4 rounded"
+          >
+            <span
+              className={`fa ${
+                isEditMode ? "fa-check text-green-500" : "fa-edit text-white"
+              } `}
+            ></span>
+          </button>
+        )}
       </div>
       <ul className="absolute">
         {filterCompanies.map((company, index) => (
@@ -192,16 +193,12 @@ export default function WatchlistPage() {
             />
           </li>
         ))}
-        {/* <div className="fa fa-bar-chart" />
-        <div className="fa fa-user-o" />
-        <div>
-          <span className="fa fa-long-arrow-up" />
-          <span className="fa fa-long-arrow-down" />
-        </div>
-        <div className="fa fa-industry" />
-        <div className="fa fa-pie-chart" />
-        <div className="fa fa-usd" /> */}
-        {/* {loggedUser ? <Dashboard loggedUser={loggedUser}/> : <Welcome />} */}
+        {watchlist.length === 0 && (
+          <div className="m-8">
+            You have no stocks in your Watchlist. Add stocks by typing the ticker
+            in search bar.
+          </div>
+        )}
       </ul>
     </div>
   );
