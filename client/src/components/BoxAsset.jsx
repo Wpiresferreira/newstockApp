@@ -10,7 +10,7 @@ export default function BoxAsset({ item, handleOnClick }) {
   if (isLoading) return <h1>Loading . . .</h1>;
   return (
     <>
-      <div className="grid grid-cols-[55px_1fr_55px_30px_100px] rounded-md  bg-sky-100 mx-2 mt-2 w-[98vw] max-w-[430px]">
+      <div className="grid grid-cols-[55px_120px_55px_30px_100px] rounded-md  bg-sky-100 mx-2 mt-2 w-[98vw] max-w-[430px]">
         <div className="m-3 rounded-full border-2 border-white overflow-hidden max-h-[40px] max-w-[40px] min-h-[40px] min-w-[40px]">
           <img
             src={item.quote.profile.logo}
