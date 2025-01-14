@@ -171,7 +171,7 @@ export default function WatchlistPage() {
         {filterCompanies.map((company, index) => (
           <li
             key={index}
-            className={`text-left ${
+            className={`py-[4px] px-[10px] w-[300px] text-left ${
               index % 2 === 0 ? " bg-sky-50 " : "bg-white"
             } hover:font-bold `}
             onClick={(e) => {

@@ -71,13 +71,13 @@ console.log(searchValue)
           <span className="fa fa-plus-circle text-white mr-2"></span>Add
         </button>
       </div>
-      <ul className="absolute">
+      <ul className="absolute ">
         {filterCompanies.map((company, index) => (
           <li
             key={index}
-            className={`text-left ${
+            className={`py-[4px] px-[10px] w-[300px] text-left ${
               index % 2 === 0 ? " bg-sky-100 " : "bg-white"
-            } hover:font-bold w-[300px]`}
+            } hover:font-bold `}
             onClick={(e) => {
               setSearchValue("")
               handleAddButton(e.target.innerText);
