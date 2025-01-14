@@ -81,29 +81,39 @@ export default function Assets() {
       </div>
       <div className="flex flex-col">
         <BoxCash item={cash} />
-        {assetsQuotes &&
-          assetsQuotes.map(
-            (asset, index) =>
-              asset.qt > 0 && (
-                <li key={index} id={`${asset.ticker}_box`} className="flex">
-                  <BoxAsset item={asset} handleOnClick={handleOnClick} />
-                </li>
-              )
-          )}
+        <div className="max-w-[430px] w-[98vw]">
+          {assetsQuotes &&
+            assetsQuotes.map(
+              (asset, index) =>
+                asset.qt > 0 && (
+                  <li key={index} id={`${asset.ticker}_box`} className="flex">
+                    <BoxAsset item={asset} handleOnClick={handleOnClick} />
+                  </li>
+                )
+            )}
+        </div>
       </div>
       {assetsQuotes.length == 0 && (
         <ul className="text-left m-8 list-disc text-sky-900">
-          <li>Your balance and your Stocks are <b>ficticius</b>, and just for training purposes.</li>
           <li>
-            You can simulate buy and sell stocks acessing the <a className ="underline text-blue-500 font-bold" onClick={() => navigate('/transactions')}>Transactions</a> page.
+            Your balance and your Stocks are <b>ficticius</b>, and just for
+            training purposes.
+          </li>
+          <li>
+            You can simulate buy and sell stocks acessing the{" "}
+            <a
+              className="underline text-blue-500 font-bold"
+              onClick={() => navigate("/transactions")}
+            >
+              Transactions
+            </a>{" "}
+            page.
           </li>
           <li>
             You have access to 50 biggest US companies + 5 biggest Brazilian
             ADRs
           </li>
-          <li className="font-bold">
-            Enjoy the App and have fun !
-          </li>
+          <li className="font-bold">Enjoy the App and have fun !</li>
         </ul>
       )}
     </div>
