@@ -10,7 +10,7 @@ export default function BoxAsset({ item, handleOnClick }) {
   if (isLoading) return <h1>Loading . . .</h1>;
   return (
     <>
-      <div className="flex rounded-l-md  bg-sky-100 ml-2 mt-2 w-[67vw]">
+      <div className="grid grid-cols-[55px_1fr_55px_30px_100px] rounded-md  bg-sky-100 mx-2 mt-2 w-[67vw]">
         <div className="m-3 rounded-full border-2 border-white overflow-hidden max-h-[40px] max-w-[40px] min-h-[40px] min-w-[40px]">
           <img
             src={item.quote.profile.logo}
@@ -33,12 +33,7 @@ export default function BoxAsset({ item, handleOnClick }) {
             {item.quote.profile.name}
           </div>
         </div>
-      </div>
-      <div
-        id={`${item.ticker}_right `}
-        className="divbox flex text-black rounded-r-md bg-sky-100 mr-2 mt-2 w-[30vw] items-center justify-end"
-      >
-        <div className="flex flex-col items-end">
+        <div className="flex flex-col justify-evenly items-end">
           <div className="text-black  text-[16px]">
             {Number(item.quote.quote.c).toLocaleString("en-CA", {minimumFractionDigits: 2, maximumFractionDigits:2})}
           </div>
@@ -50,15 +45,15 @@ export default function BoxAsset({ item, handleOnClick }) {
           </div>
         </div>
         {item.quote.quote.dp > 0 ? (
-          <div className="m-2 min-w-8 min-h-8 ">
+          <div className="flex min-w-8 min-h-8 justify-center items-center">
             <span className="text-3xl fa fa-caret-up text-green-400" />
           </div>
         ) : (
-          <div className="flex m-2 min-w-8 min-h-8 justify-center items-center">
+          <div className="flex min-w-8 min-h-8 justify-center items-center">
             <span className="text-3xl fa fa-caret-down text-red-400" />
           </div>
         )}
-        <div className="flex flex-col items-end w-[85px]">
+        <div className="flex flex-col justify-evenly items-end w-[85px] mr-2">
           <div className="font-bold">
             ${(item.qt * item.quote.quote.c).toLocaleString("en-CA", {minimumFractionDigits: 2, maximumFractionDigits:2})}
           </div>
