@@ -81,7 +81,7 @@ export default function Assets() {
       </div>
       <div className="flex flex-col">
         <BoxCash item={cash} />
-        <div className="max-w-[430px] w-[98vw]">
+        <div className="max-w-[430px] w-[98vw] grid">
           {assetsQuotes &&
             assetsQuotes.map(
               (asset, index) =>
