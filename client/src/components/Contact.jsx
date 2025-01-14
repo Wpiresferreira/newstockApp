@@ -21,9 +21,9 @@ export default function Contact() {
   ];
 
   return (
-    <div className="fixed bottom-0 flex justify-evenly max-w-[430px] w-[100vw]">
+    <div className="bottom-0 fixed flex justify-evenly w-[100vw]">
       {contacts.map((contact, index) => (
-        <button key = {index} className="bg-white h-12 rounded-full w-12 flex justify-center items-center">
+        <button key = {index} className="flex justify-center items-center bg-white rounded-full w-12 h-12">
           <span
             onClick={() => {
                 if( contact.navigate){
