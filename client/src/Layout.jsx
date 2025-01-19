@@ -11,7 +11,7 @@ export default function Layout() {
 
 
   return (
-    <main className="flex flex-col min-h-[100vh] max-w-430px] bg-sky-50">
+    <main className="flex flex-col min-h-[100vh] max-w-[430px] bg-sky-50">
       <Top />
       <Outlet context={{setShowAlert, setTypeAlert, setMessageAlert}} />
       <Alert showAlert={showAlert} setShowAlert={setShowAlert}  typeAlert={typeAlert} messageAlert={messageAlert} />
